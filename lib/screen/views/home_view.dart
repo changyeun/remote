@@ -33,6 +33,7 @@ class HomeView extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         HomeService.to.type.value = 4;
+                        HomeService.to.selectJobIndex.value = index;
                       },
                       child: Container(
                           width: Get.width,

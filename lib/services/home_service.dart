@@ -12,6 +12,7 @@ class HomeService extends GetxService {
 
   RxInt type = 0.obs;
   RxInt profileType = 0.obs;
+  RxInt selectJobIndex = 0.obs;
 
   RxList<UserModel> userModelList =  RxList([]);
   RxList<JobModel> jobModelList = RxList([]);

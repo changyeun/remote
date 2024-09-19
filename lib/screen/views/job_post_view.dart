@@ -93,7 +93,7 @@ class _JobPostViewState extends State<JobPostView> {
             width: Get.width,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: AppColors.grey2, width: 1),
+                // border: Border.all(color: AppColors.grey2, width: 1),
                 color: AppColors.mint_light
             ),
             padding: const EdgeInsets.all(40),

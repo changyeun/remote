@@ -121,7 +121,7 @@ class MainView extends StatelessWidget {
             children: [
               HomeService.to.type.value == 1? const ProfileEmailView():
               HomeService.to.type.value == 2? const ProfileListView():
-              HomeService.to.type.value == 3? const JobPostView():
+              HomeService.to.type.value == 3? JobPostView():
               HomeService.to.type.value == 4? const JobDetailView():
               const HomeView(),
 

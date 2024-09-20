@@ -468,7 +468,7 @@ class _JobPostViewState extends State<JobPostView> {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    //rust edit 
+                    //rust edit
                     RemoteStyle.remoteText('Placeholder', widget.textEditingCompanyNameController),
                   ],
                 ),

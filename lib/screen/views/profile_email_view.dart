@@ -67,6 +67,6 @@ class _ProfileEmailViewState extends State<ProfileEmailView> {
             ),
             const SizedBox(height: 120)
           ])
-        : const ProfileEditView());
+        : ProfileEditView());
   }
 }

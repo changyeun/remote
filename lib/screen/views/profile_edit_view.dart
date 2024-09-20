@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:crypto_ui_web/constant/color.dart';
 import 'package:crypto_ui_web/screen/widget/remote_style.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +20,18 @@ class ProfileEditView extends StatefulWidget {
   TextEditingController textEditingTwitterController = TextEditingController();
   TextEditingController textEditingLinkedInController = TextEditingController();
   TextEditingController textEditingInstagramController = TextEditingController();
+  TextEditingController textEditingBioController = TextEditingController();
+  TextEditingController textEditingSkillController = TextEditingController();
+  TextEditingController textEditingLanguagesController = TextEditingController();
+  TextEditingController textEditingFluentController = TextEditingController();
+  TextEditingController textEditingTimezoneController = TextEditingController();
+  TextEditingController textEditingAnnualPayController = TextEditingController();
+  TextEditingController textEditingHourlyPayController = TextEditingController();
+
+  RxList<TextEditingController> textEditingEmploymentController = <TextEditingController>[].obs;
+  RxList<TextEditingController> textEditingSideProjectController = <TextEditingController>[].obs;
+  RxList<TextEditingController> textEditingEducationsController = <TextEditingController>[].obs;
+
 
   //dropdown
   RxString selectedAccountTypeItem = 'Please Select'.obs;
@@ -363,36 +377,164 @@ class _ProfileEditViewState extends State<ProfileEditView> {
             ),
             padding: const EdgeInsets.all(40),
             margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Work', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, height: 1.8, color: AppColors.black)),
+                const Text('Work', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, height: 1.8, color: AppColors.black)),
 
                 //Bio
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Row(
                   children: [
-                    Expanded(child: Text('Website', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
-                    // Expanded(child: Row(
-                    //   children: [
-                    //     const Text('https://', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1, color: AppColors.black)),
-                    //     RemoteStyle.remoteText('website URL', widget.textEditingUserNameController),
-                    //   ],
-                    // )),
+                    const Expanded(child: Text('Bio', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    Expanded(child: RemoteStyle.remoteText('Write a bio about yourself, what your skills are, your experience previously and what you’re looking for (profiles without a bio are not shown on the frontpage)', widget.textEditingBioController, maxLines: 4)),
                   ],
-                )
+                ),
 
+                //Skills/stack tags (comma separated)
+                const SizedBox(height: 40),
+                Row(
+                  children: [
+                    const Expanded(child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Skills/stack tags (comma separated)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black)),
+                        SizedBox(height: 10),
+                        Text('Use tage like react, js, html, ux, ui, customer support, maketing, frond end,\n'
+                            'back end, office365, excel etc. The more/better tags you use the more you\n'
+                            'show up one the site! See the Remote Island jobs pages for example tags\n'
+                            'in your field to add here.',
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
+                      ],
+                    )),
+                    Expanded(child: RemoteStyle.remoteText('Tags (comma seperated)', widget.textEditingSkillController, maxLines: 4)),
+                  ],
+                ),
+
+                //Spoken laguages you’re fluent in (comman seperated)
+                const SizedBox(height: 40),
+                Row(
+                  children: [
+                    const Expanded(child: Text('Spoken laguages you’re fluent in (comman seperated)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    Expanded(child: Row(
+                      children:  [
+                        Expanded(child: RemoteStyle.remoteText('Languages (comma seperated)', widget.textEditingLanguagesController)),
+                        const SizedBox(width: 10),
+                        const Text('(like Spanish, German, Mandarin)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))
+                      ],
+                    )),
+                  ],
+                ),
+
+                //rust
+                //Available for work
+                const SizedBox(height: 40),
+                Row(
+                  children: [
+                    const Expanded(child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Available for work', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black)),
+                        SizedBox(height: 10),
+                        Text('You’ll only be able to receive job offers and get contacted if you’re set to available.',
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
+                      ],
+                    )),
+                    Expanded(child: Row(
+                      children:  [
+                        Expanded(child: RemoteStyle.remoteText('Languages (comma seperated)', widget.textEditingFluentController)),
+                        const SizedBox(width: 10),
+                        const Text('(like Spanish, German, Mandarin)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))
+                      ],
+                    )),
+                  ],
+                ),
+
+                //Your preferred timezones
+                const SizedBox(height: 40),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Expanded(child: Text('Your preferred timezones', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RemoteStyle.remoteText('Preferred timezones', widget.textEditingTimezoneController),
+                          const SizedBox(height: 10),
+                          const Text('Please write these as comma separated list of timezones, like 0, +1, +2, etc.\n'
+                              'Otherwise the robot can’t filter on it.',
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                // Your preferred annual pay (min)
+                const SizedBox(height: 40),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Expanded(child: Text('Your preferred annual pay (min)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Text('US ',
+                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
+                              const SizedBox(width: 10),
+                              SizedBox(width: 100, child: RemoteStyle.remoteText('min', widget.textEditingAnnualPayController)),
+                              const SizedBox(width: 10),
+                              const Text(',000 / year',
+                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          const Text('Only profiles with annual pay set are shown on the front page. Please write these as US dollars per year in thousands e.g. write 45 for 45,000/year. If you charge by project/day ur, make an estimate of what you make in a year if it’d be full time and enter that.',
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                // Your preferred hourly pay (min)
+                const SizedBox(height: 40),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Expanded(child: Text('Your preferred hourly pay (min)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Text('US ',
+                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
+                              const SizedBox(width: 10),
+                              SizedBox(width: 100, child: RemoteStyle.remoteText('min', widget.textEditingHourlyPayController)),
+                              const SizedBox(width: 10),
+                              const Text(',000 / year',
+                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
+                            ],
+                          ),
+                          // const SizedBox(height: 10),
+                          // Text('Only profiles with annual pay set are shown on the front page. Please write these as US dollars per year in thousands e.g. write 45 for 45,000/year. If you charge by project/day ur, make an estimate of what you make in a year if it’d be full time and enter that.',
+                          //     style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ],
             )
         ),
         const SizedBox(height: 80),
 
-
-
-
-
-
-        //foot section
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 100),
           child: Row(
@@ -414,6 +556,8 @@ class _ProfileEditViewState extends State<ProfileEditView> {
           ),
         ),
         const SizedBox(height: 80),
+
+        //foot section
         Container(
             width: Get.width,
             decoration: BoxDecoration(
@@ -422,17 +566,169 @@ class _ProfileEditViewState extends State<ProfileEditView> {
             ),
             padding: const EdgeInsets.all(40),
             margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Profile', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, height: 1.8, color: AppColors.black)),
-                SizedBox(height: 40),
-                Row(
-                  children: [
-                    Expanded(child: Text('Username', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
-                    // Expanded(child: Text('Profile', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, height: 1.8))),
-                  ],
-                )
+                const Text('Employment', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, height: 1.8, color: AppColors.black)),
+                const SizedBox(height: 30),
+                const Text('202305 - 202406 : venture capitalist @Jesttrack', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.1, color: AppColors.black)),
+                const SizedBox(height: 30),
+                const Divider(
+                  height: 1,
+                  thickness: 1,
+                  color: AppColors.grey2,
+                ),
+                const SizedBox(height: 30),
+                const Text('Please write years and months! Leave year end empty if you still work there (It’ll show as Now).\n'
+                    'To remove something, make the textboxes empty (for now).', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.1, color: AppColors.black)),
+                const SizedBox(height: 30),
+
+                Obx(() => Column(
+                  children: List.generate(widget.textEditingEmploymentController.length,
+                      (index) => Column(
+                        children: [
+                          RemoteStyle.remoteText('Employment', widget.textEditingEmploymentController[index]),
+                          const SizedBox(height: 10),
+                        ],
+                      )),
+                )),
+                const SizedBox(height: 10),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap:(){
+                          widget.textEditingEmploymentController.add(TextEditingController());
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                          decoration: BoxDecoration(
+                            color: AppColors.mint,
+                            borderRadius: BorderRadius.circular(500),
+                          ),
+                          child: const Text(
+                            'Add a new row',
+                            style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+              ],
+            )
+        ),
+        const SizedBox(height: 80),
+        Container(
+            width: Get.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: AppColors.grey2, width: 1),
+            ),
+            padding: const EdgeInsets.all(40),
+            margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Side Projects', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, height: 1.8, color: AppColors.black)),
+                const SizedBox(height: 30),
+                const Text('Please write years and months! You can add your (side) projects and portfolio items here.\n'
+                    'Leave year end empty if you still work on it (it’ll show as Now). To remove something, make the textboxes empty (for now).',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.1, color: AppColors.black)),
+                const SizedBox(height: 30),
+
+                Obx(() => Column(
+                  children: List.generate(widget.textEditingSideProjectController.length,
+                          (index) => Column(
+                        children: [
+                          RemoteStyle.remoteText('Side Projects', widget.textEditingSideProjectController[index]),
+                          const SizedBox(height: 10),
+                        ],
+                      )),
+                )),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap:(){
+                          widget.textEditingSideProjectController.add(TextEditingController());
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                          decoration: BoxDecoration(
+                            color: AppColors.mint,
+                            borderRadius: BorderRadius.circular(500),
+                          ),
+                          child: const Text(
+                            'Add a new row',
+                            style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+              ],
+            )
+        ),
+        const SizedBox(height: 80),
+        Container(
+            width: Get.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: AppColors.grey2, width: 1),
+            ),
+            padding: const EdgeInsets.all(40),
+            margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Educations', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, height: 1.8, color: AppColors.black)),
+                const SizedBox(height: 30),
+                const Text('Please write years and months! Leave year end empty if you still study there (itll show as Now).\nTo remove something, make the textboxes empty (for now).',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.1, color: AppColors.black)),
+                const SizedBox(height: 30),
+
+                Obx(() => Column(
+                  children: List.generate(widget.textEditingEducationsController.length,
+                          (index) => Column(
+                        children: [
+                          RemoteStyle.remoteText('Educations', widget.textEditingEducationsController[index]),
+                          const SizedBox(height: 10),
+                        ],
+                      )),
+                )),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap:(){
+                          widget.textEditingEducationsController.add(TextEditingController());
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                          decoration: BoxDecoration(
+                            color: AppColors.mint,
+                            borderRadius: BorderRadius.circular(500),
+                          ),
+                          child: const Text(
+                            'Add a new row',
+                            style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
               ],
             )
         ),

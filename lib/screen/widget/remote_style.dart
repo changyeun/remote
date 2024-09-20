@@ -3,8 +3,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RemoteStyle{
-  static Widget remoteText(String hintText, TextEditingController textController){
+class RemoteStyle {
+  static Widget remoteText(String hintText, TextEditingController textController) {
     return TextField(
       controller: textController,
       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.black, height: 1.1),
@@ -21,7 +21,40 @@ class RemoteStyle{
     );
   }
 
-  static Widget remoteDropdown(List<String> itemList, RxString selectedItem){
+  static Widget remoteMultiText(String hintText, TextEditingController textController, {maxLines = 3}) {
+    return TextField(
+      controller: textController,
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.black, height: 1.1),
+      maxLines: maxLines,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        hintText: hintText,
+        hintStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: AppColors.grey1, height: 1.5),
+        // fillColor: AppColors.white,
+        // filled: true,
+        border: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.grey2,
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.grey2,
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.grey2,
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+      ),
+    );
+  }
+
+  static Widget remoteDropdown(List<String> itemList, RxString selectedItem) {
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
         barrierColor: Colors.transparent,
@@ -60,9 +93,10 @@ class RemoteStyle{
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Obx(() => Text(selectedItem.value,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.black, height: 1.1),
-                )),
+                Obx(() => Text(
+                      selectedItem.value,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.black, height: 1.1),
+                    )),
                 Image.asset(
                   'assets/images/ic_arrow_down.png',
                   width: 16,
@@ -75,29 +109,25 @@ class RemoteStyle{
         ),
         items: itemList
             .map((item) => DropdownMenuItem<String>(
-          value: item,
-          child: Column(
-            children: [
-              if (item != itemList.first)
-                Container(
-                    height: 1.5,
-                    color: AppColors.grey2
-                ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      item,
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.black),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ))
+                  value: item,
+                  child: Column(
+                    children: [
+                      if (item != itemList.first) Container(height: 1.5, color: AppColors.grey2),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              item,
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ))
             .toList(),
         onChanged: (value) async {
           selectedItem.value = value as String;

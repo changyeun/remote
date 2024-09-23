@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:crypto_ui_web/constant/color.dart';
+import 'package:crypto_ui_web/repo/job_repository.dart';
 import 'package:crypto_ui_web/screen/widget/remote_style.dart';
+import 'package:crypto_ui_web/services/home_service.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -127,7 +129,8 @@ class _JobPostViewState extends State<JobPostView> {
                             ],
                           ),
                           const SizedBox(height: 10),
-                          RemoteStyle.remoteDropdown(['g', 'ml'], widget.selectedCategoryItem),
+                          RemoteStyle.remoteDropdown(['Design','Full-Stack Programming', 'Front-End Programming', 'Back-End Programming',
+                            'Customer Suport', 'DevOps and Sysadmin', 'Sales and Marketing', 'Management and Finance', 'Legal', 'Product', 'All other Remote'], widget.selectedCategoryItem),
                         ],
                       ),
                     ),
@@ -144,7 +147,7 @@ class _JobPostViewState extends State<JobPostView> {
                             ],
                           ),
                           const SizedBox(height: 10),
-                          RemoteStyle.remoteDropdown(['g', 'ml'], widget.selectedSkillItem),
+                          RemoteStyle.remoteDropdown(HomeService.to.skillList, widget.selectedSkillItem),
                         ],
                       ),
                     ),
@@ -200,7 +203,8 @@ class _JobPostViewState extends State<JobPostView> {
                             ],
                           ),
                           const SizedBox(height: 10),
-                          RemoteStyle.remoteDropdown(['g', 'ml'], widget.selectedSalaryRangeItem),
+                          RemoteStyle.remoteDropdown(['\$10,000 - \$25,000 USD', '\$25,000 - \$48,999 USD', '\$50,000 - \$74,999 USD',
+                              '\$75,000 - \$99,999 USD', '\$100,000 or more USD'], widget.selectedSalaryRangeItem),
                         ],
                       ),
                     ),
@@ -317,7 +321,7 @@ class _JobPostViewState extends State<JobPostView> {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    RemoteStyle.remoteMultiText('Placeholder', widget.textEditingLocationController, maxLines: 3),
+                    RemoteStyle.remoteMultiText('Placeholder', widget.textEditingAboutRoleController, maxLines: 3),
                   ],
                 ),
 
@@ -592,6 +596,16 @@ class _JobPostViewState extends State<JobPostView> {
 
                 //des
                 const SizedBox(height: 40),
+
+                const Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Company Description', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.2, color: AppColors.black)),
+                    SizedBox(width: 2),
+                    Text('*', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.2, color: Color.fromRGBO(246, 84, 40, 1))),
+                  ],
+                ),
+                const SizedBox(height: 10),
                 RemoteStyle.remoteMultiText('Placeholder', widget.textEditingDesController, maxLines: 10),
 
               ],
@@ -604,7 +618,26 @@ class _JobPostViewState extends State<JobPostView> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               GestureDetector(
-                onTap: (){
+                onTap: () async{
+                  await jobsRepository.createJob(
+                      widget.textEditingTitleController.text,
+                    widget.selectedCategoryItem.value,
+                    widget.selectedSkillItem.value,
+                    widget.radioWorldwide.value,
+                    widget.selectedSalaryRangeItem.value,
+                    widget.radioJobType.value,
+                    widget.textEditingLinkOrEmailController.text,
+                    widget.textEditingLocationController.text,
+                    widget.textEditingAboutRoleController.text,
+                    widget.textEditingResponseController.text,
+                    widget.textEditingQualityController.text,
+                    widget.textEditingBenefitController.text,
+                    widget.textEditingCompanyNameController.text,
+                    widget.textEditingCompanyHQController.text,
+                    widget.selectJobImage.value,
+                    widget.textEditingWebsiteController.text,
+                    widget.textEditingEmailController.text,
+                    widget.textEditingDesController.text);
                 },
                 child: Container(
                   // margin: const EdgeInsets.symmetric(vertical: 8),

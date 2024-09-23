@@ -41,12 +41,12 @@ class _JobDetailViewState extends State<JobDetailView> {
           ),
           const SizedBox(height: 50),
 
-          Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].name ?? '',
+          Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].title ?? '',
             style: const TextStyle(fontSize: 36, fontWeight: FontWeight.w600, color: AppColors.black),),
           const SizedBox(height: 4),
-          const Text('OneCompany', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: AppColors.black),),
+          Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].companyName ?? '', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: AppColors.black),),
           const SizedBox(height: 24),
-          const Text('Los Angeles, United States ·  4 days ago', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.grey1),),
+          Text('${HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].location ?? ''} ·  4 days ago', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.grey1),),
           const SizedBox(height: 100),
 
 
@@ -64,13 +64,43 @@ class _JobDetailViewState extends State<JobDetailView> {
                         ),
                         padding: const EdgeInsets.all(40),
                         margin: const EdgeInsets.symmetric(vertical: 8),
-                        child: const Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('About OneCompany', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600, color: AppColors.black),),
-                            SizedBox(height: 14),
-                            Text('Hipster ipsum tattooed brunch Im baby. Goth pok 90s raclette man level cred fixie shoreditch four. Wolf typewriter wolf taxidermy before lomo live-edge bruh pinterest tilde. Goth quinoa party a kogi gochujang. Plaid shoreditch +1 craft belly poke. Cold-pressed poutine narwhal tofu pack pork master truffaut +1. Craft batch hashtag meggings direct green tousled on. Hashtag truck slow-carb art blog blue. Pop-up adaptogen plant snackwave small portland jean fund gentrify banh. Roof copper santo hot wolf.',
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: AppColors.black),),
+                            Text('About ${HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].companyName ?? ''}', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600, color: AppColors.black),),
+                            const SizedBox(height: 14),
+                            Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].des ?? '',
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: AppColors.black),),
+                            const SizedBox(height: 40),
+
+                            const Text('About the Role', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600, color: AppColors.black),),
+                            const SizedBox(height: 14),
+                            Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].aboutRole ?? '',
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: AppColors.black),),
+                            const SizedBox(height: 40),
+
+                            const Text('Skills', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600, color: AppColors.black),),
+                            const SizedBox(height: 14),
+                            Builder(
+                                builder: (context) {
+                                  List<String> skillList = (HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].skill ?? '').split(',');
+                                  for(int i=0;i<skillList.length;i++){
+                                    skillList[i] = skillList[i].replaceAll(' ', '');
+                                  }
+                                  return Wrap(
+                                    children: List.generate(skillList.length ?? 0,
+                                            (index) => Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
+                                          margin: const EdgeInsets.only(right: 10),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.mint_light,
+                                            borderRadius: BorderRadius.circular(4),
+                                          ),
+                                          child: Text(skillList[index], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.mint)),
+                                        )),
+                                  );
+                                }
+                            ),
                           ],
                         )),
                     const SizedBox(height: 16),
@@ -83,41 +113,25 @@ class _JobDetailViewState extends State<JobDetailView> {
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
                         margin: const EdgeInsets.symmetric(vertical: 8),
-                        child: Row(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(width: 54, height: 54, color: Colors.red),
-                            const SizedBox(width: 20),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Expanded(child: Text('Director, Product Management', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, height: 1, color: AppColors.black))),
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 10),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.mint_light,
-                                              borderRadius: BorderRadius.circular(4),
-                                            ),
-                                            child: const Text('abed', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.mint)),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(height: 14),
-                                  const Row(
-                                    children: [
-                                      Expanded(child: Text('Director, Product Management', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
-                                      Text('1 days ago', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, height: 1, color: AppColors.grey1))
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
+                            const Text('Responsibilities', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600, color: AppColors.black),),
+                            const SizedBox(height: 14),
+                            Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].responsibility ?? '',
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: AppColors.black),),
+                            const SizedBox(height: 40),
+
+                            const Text('Qualifications', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600, color: AppColors.black),),
+                            const SizedBox(height: 14),
+                            Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].qualifications ?? '',
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: AppColors.black),),
+                            const SizedBox(height: 40),
+
+                            const Text('Benefits', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600, color: AppColors.black),),
+                            const SizedBox(height: 14),
+                            Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].benefits ?? '',
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: AppColors.black),),
                           ],
                         )),
                     const SizedBox(height: 16),
@@ -130,41 +144,13 @@ class _JobDetailViewState extends State<JobDetailView> {
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
                         margin: const EdgeInsets.symmetric(vertical: 8),
-                        child: Row(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(width: 54, height: 54, color: Colors.red),
-                            const SizedBox(width: 20),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Expanded(child: Text('Director, Product Management', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, height: 1, color: AppColors.black))),
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 10),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.mint_light,
-                                              borderRadius: BorderRadius.circular(4),
-                                            ),
-                                            child: const Text('abed', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.mint)),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(height: 14),
-                                  const Row(
-                                    children: [
-                                      Expanded(child: Text('Director, Product Management', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
-                                      Text('1 days ago', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, height: 1, color: AppColors.grey1))
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
+                            const Text('Salary and Compensation', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600, color: AppColors.black),),
+                            const SizedBox(height: 14),
+                            Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].salaryRange ?? '',
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: AppColors.black),),
                           ],
                         )),
                     const SizedBox(height: 100),
@@ -179,9 +165,109 @@ class _JobDetailViewState extends State<JobDetailView> {
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                 width: 388,
-                child: const Column(
+                child: Column(
                   children: [
-                    Text('OneCompany', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: AppColors.black),),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(500),
+                          image: HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].photo == ''?
+                          const DecorationImage(
+                              image: AssetImage('assets/images/img_empty_job.png'),
+                              fit: BoxFit.fill):
+                          DecorationImage(
+                              image: NetworkImage(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].photo ?? ''),
+                              fit: BoxFit.fill)
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].companyName ?? '', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: AppColors.black),),
+                    const SizedBox(height: 40),
+
+                    Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/earth.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].website ?? '',
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.grey1),),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+
+                    Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/home.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].worldWide == "Yes"? 'Remote':'not Remote',
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.grey1),),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+
+                    Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/target.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].location ?? '',
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.grey1),),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+
+                    Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/time.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].jobType ?? '',
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.grey1),),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+
+                    Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/wallet.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].salaryRange ?? '',
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.grey1),),
+                      ],
+                    ),
+                    // const SizedBox(height: 14),
+                    //
+                    // Row(
+                    //   children: [
+                    //     Image.asset(
+                    //       'assets/images/calendar.png',
+                    //       width: 20,
+                    //       height: 20,
+                    //     ),
+                    //     const SizedBox(width: 10),
+                    //     Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].salaryRange ?? '',
+                    //       style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.grey1),),
+                    //   ],
+                    // ),
+                    // const SizedBox(height: 14),
                   ],
                 ),
               )
@@ -190,28 +276,73 @@ class _JobDetailViewState extends State<JobDetailView> {
 
 
 
-          Row(
-            children: [
-              GestureDetector(
-                onTap: (){
-                  HomeService.to.type.value = 1;
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 11.5),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(500),
-                  ),
-                  child: const Text(
-                    'Sign up for free',
-                    style: TextStyle(fontSize: 14, color: AppColors.mint, height: 1, fontWeight: FontWeight.w500),
+
+
+          Container(
+            padding: const EdgeInsets.only(right: 388+ 40),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () async{
+
+                  },
+                  child: Container(
+                    // padding: const EdgeInsets.symmetric(horizontal: 100),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          // margin: const EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
+                          decoration: BoxDecoration(
+                            color: AppColors.mint,
+                            borderRadius: BorderRadius.circular(500),
+                          ),
+                          child: const Text(
+                            'Apply',
+                            style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
 
 
-            ],
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Share this job!',
+                      style: TextStyle(fontSize: 14, color: AppColors.grey1, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/share_telegram.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                        const SizedBox(width: 14),
+                        Image.asset(
+                          'assets/images/share_linkedin.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                        const SizedBox(width: 14),
+                        Image.asset(
+                          'assets/images/share_twitter.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
           const SizedBox(height: 93),
           const SizedBox(height: 120),

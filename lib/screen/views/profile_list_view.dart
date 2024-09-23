@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfileListView extends StatefulWidget {
-  const ProfileListView({super.key});
+  ProfileListView({super.key});
+
+  RxString selectTag = ''.obs;
+
 
   @override
   State<ProfileListView> createState() => _ProfileListViewState();
@@ -31,16 +34,37 @@ class _ProfileListViewState extends State<ProfileListView> {
             padding: const EdgeInsets.symmetric(horizontal: 100),
             width: Get.width,
             child: Wrap(
-              children: List.generate(10,
-                      (index) => Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
-                    margin: const EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                      color: AppColors.mint_light,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: const Text('abed', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.mint)),
-                  )),
+              children: List.generate(HomeService.to.skillList.length,
+                      (index) => GestureDetector(
+                        onTap: (){
+                          widget.selectTag.value = HomeService.to.skillList[index];
+                          HomeService.to.selectUserModelList.value = [];
+                          if(widget.selectTag.value == 'All' || widget.selectTag.value == ''){
+                            for(int i=0;i<HomeService.to.userModelList.length;i++){
+                              HomeService.to.selectUserModelList.add(HomeService.to.userModelList[i]);
+                            }
+                          } else{
+                            for(int i=0; i<HomeService.to.userModelList.length; i++){
+                              List<String> skillList = (HomeService.to.userModelList[i].skills ?? '').split(',');
+                              for(int i=0;i<skillList.length;i++){
+                                skillList[i] = skillList[i].replaceAll(' ', '');
+                              }
+                              if(skillList.contains(widget.selectTag.value)){
+                                HomeService.to.selectUserModelList.add(HomeService.to.userModelList[i]);
+                              }
+                            }
+                          }
+                        },
+                        child: Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
+                                            margin: const EdgeInsets.only(right: 20, bottom: 20),
+                                            decoration: BoxDecoration(
+                        color: AppColors.mint_light,
+                        borderRadius: BorderRadius.circular(4),
+                                            ),
+                                            child: Text(HomeService.to.skillList[index], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.mint)),
+                                          ),
+                      )),
             ),
           ),
         ),
@@ -49,57 +73,72 @@ class _ProfileListViewState extends State<ProfileListView> {
         const SizedBox(height: 120),
 
         //list
-        Container(
+        Obx(() => Container(
           padding: const EdgeInsets.symmetric(horizontal: 100),
           child: Wrap(
-            children: List.generate(HomeService.to.userModelList.length,
-                    (index) =>  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: AppColors.grey2, width: 1),
-                    ),
-                    padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.only(right: 22, bottom: 22),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 256,
-                          height: 256,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              image: const DecorationImage(
-                                  image: AssetImage('assets/images/image_empty_profile.png'),
-                                  fit: BoxFit.fill)
-                          ),
+            children: List.generate(HomeService.to.selectUserModelList.length,
+                    (index) =>  Builder(
+                      builder: (context) {
+                        List<String> skillList = (HomeService.to.selectUserModelList[index].skills ?? '').split(',');
+                        for(int i=0;i<skillList.length;i++){
+                          skillList[i] = skillList[i].replaceAll(' ', '');
+                        }
+                        return Container(
+                          width: 284,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: AppColors.grey2, width: 1),
                         ),
-                        const SizedBox(height: 10),
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('${HomeService.to.userModelList[index].name}\n${'abed'}',
-                                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.4, color: AppColors.grey1)),
-                              const SizedBox(height: 20),
-                              Wrap(
-                                children: List.generate(5,
-                                        (index) => Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
-                                      margin: const EdgeInsets.only(right: 10),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.mint_light,
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: const Text('abed', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.mint)),
-                                    )),
+                        padding: const EdgeInsets.all(10),
+                        margin: const EdgeInsets.only(right: 22, bottom: 22),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 256,
+                              height: 256,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  image: HomeService.to.selectUserModelList[index].profilePhoto == ''?
+                                  const DecorationImage(
+                                      image: AssetImage('assets/images/image_empty_profile.png'),
+                                      fit: BoxFit.fill):
+                                  DecorationImage(
+                                      image: NetworkImage(HomeService.to.selectUserModelList[index].profilePhoto ?? ''),
+                                      fit: BoxFit.fill)
                               ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ))),
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('${HomeService.to.selectUserModelList[index].userName}\n${HomeService.to.selectUserModelList[index].bio}',
+                                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.4, color: AppColors.grey1)),
+                                  const SizedBox(height: 20),
+                                  Wrap(
+                                    children: List.generate(skillList.length ?? 0,
+                                            (index) => Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
+                                          margin: const EdgeInsets.only(right: 10),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.mint_light,
+                                            borderRadius: BorderRadius.circular(4),
+                                          ),
+                                          child: Text(skillList[index], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.mint)),
+                                        )),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ));
+                      }
+                    )),
           ),
-        ),
+        )),
         const SizedBox(height: 152),
 
         Container(

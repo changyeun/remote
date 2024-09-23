@@ -2,7 +2,9 @@ import 'dart:io';
 import 'dart:js_interop';
 
 import 'package:crypto_ui_web/constant/color.dart';
+import 'package:crypto_ui_web/repo/user_repository.dart';
 import 'package:crypto_ui_web/screen/widget/remote_style.dart';
+import 'package:crypto_ui_web/services/home_service.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,6 @@ class ProfileEditView extends StatefulWidget {
 
   //text
   TextEditingController textEditingUserNameController = TextEditingController();
-  TextEditingController textEditingLinkOrEmailController = TextEditingController();
   TextEditingController textEditingEmailController = TextEditingController();
   TextEditingController textEditingWebsiteController = TextEditingController();
   TextEditingController textEditingGithubController = TextEditingController();
@@ -27,7 +28,6 @@ class ProfileEditView extends StatefulWidget {
   TextEditingController textEditingBioController = TextEditingController();
   TextEditingController textEditingSkillController = TextEditingController();
   TextEditingController textEditingLanguagesController = TextEditingController();
-  TextEditingController textEditingFluentController = TextEditingController();
   TextEditingController textEditingTimezoneController = TextEditingController();
   TextEditingController textEditingAnnualPayController = TextEditingController();
   TextEditingController textEditingHourlyPayController = TextEditingController();
@@ -51,7 +51,28 @@ class ProfileEditView extends StatefulWidget {
   RxBool selectDate = true.obs;
   Rx<DateTime> selectDateTime = Rx<DateTime>(DateTime.now());
 
+
+  //etc
   RxString selectProfileImage = ''.obs;
+  List<String> locationList = ['Abkhazia', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia',
+    'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herz,egovina', 'Botswana',
+    'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Canadart', 'Cape Verde', 'Central African Republic',
+    'Chad', 'Chile', 'China', 'Colombia,', 'Comoros', 'Costa Rica', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Democratic Republic of the Congo',
+    'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'East Timor', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia',
+    'Eswatini', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea',
+    'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Ireland', 'Islamic Emirate of Afghanistan',
+    'Israel', 'Italy', 'Ivory Coast', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kosovo', 'Kuwait', 'Kyrgyzstan',
+    'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi',
+    'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico', 'Micronesia',
+    'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand',
+    'Nicaragua', 'Niger', 'Nigeria', 'North Korea', 'North Macedonia', 'Northern Cyprus', 'Norway', 'Oman', 'Pakistan', 'Palau',
+    'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay','Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'Republic of the Congo',
+    'Romania', 'Russia', 'Rwanda', 'Sahrawi Arab Democratic Republic', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines',
+    'Samoa', 'San Marino', 'São Tomé and Príncipe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia',
+    'Solomon Islands', 'Somalia', 'Somaliland', 'South Africa', 'South Ossetia', 'South Sudan', 'Sovereign Military Order of Malta[x]', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname',
+    'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan,', 'Tanzania', 'Thailand', 'The Gambia', 'Togo', 'Tonga', 'Transnistria', 'Trinidad and Tobago',
+    'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan',
+    'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'];
 
   @override
   State<ProfileEditView> createState() => _ProfileEditViewState();
@@ -67,24 +88,29 @@ class _ProfileEditViewState extends State<ProfileEditView> {
           fit: BoxFit.contain,
         ),
         const SizedBox(height: 80),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 100),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                // margin: const EdgeInsets.symmetric(vertical: 8),
-                padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
-                decoration: BoxDecoration(
-                  color: AppColors.mint,
-                  borderRadius: BorderRadius.circular(500),
+        GestureDetector(
+          onTap: () async{
+            await saveProfile();
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 100),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  // margin: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
+                  decoration: BoxDecoration(
+                    color: AppColors.mint,
+                    borderRadius: BorderRadius.circular(500),
+                  ),
+                  child: const Text(
+                    'Save changes',
+                    style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                  ),
                 ),
-                child: const Text(
-                  'Save changes',
-                  style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 80),
@@ -116,7 +142,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                 Row(
                   children: [
                     const Expanded(child: Text('Account type', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
-                    Expanded(child: RemoteStyle.remoteDropdown(['g', 'ml'], widget.selectedAccountTypeItem)),
+                    Expanded(child: RemoteStyle.remoteDropdown(["I'm a remote worker","I'm hiring remote workers"], widget.selectedAccountTypeItem)),
                   ],
                 ),
 
@@ -182,13 +208,13 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                     const Expanded(child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Account type', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black)),
+                        Text('Location', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black)),
                         SizedBox(height: 10),
                         Text('In which country are you staying now?\nThis helps us connect you to other remote workers there.',
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
-                    Expanded(child: RemoteStyle.remoteDropdown(['g', 'ml'], widget.selectedLocationItem)),
+                    Expanded(child: RemoteStyle.remoteDropdown(widget.locationList, widget.selectedLocationItem)),
                   ],
                 ),
 
@@ -208,7 +234,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
-                    Expanded(child: RemoteStyle.remoteDropdown(['g', 'ml'], widget.selectedResidencyCountryItem)),
+                    Expanded(child: RemoteStyle.remoteDropdown(widget.locationList, widget.selectedResidencyCountryItem)),
                   ],
                 ),
 
@@ -225,7 +251,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
-                    Expanded(child: RemoteStyle.remoteDropdown(['g', 'ml'], widget.selectedNationalityItem)),
+                    Expanded(child: RemoteStyle.remoteDropdown(widget.locationList, widget.selectedNationalityItem)),
                   ],
                 ),
 
@@ -238,7 +264,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                       children: [
                         Text('Eamil', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black)),
                         SizedBox(height: 10),
-                        Text('We never dispaly this on the site, but you use this for logging in. And we forward you messages from employers, as well as you notifications.',
+                        Text('We never dispaly this on the site, but you use this for logging in.\nAnd we forward you messages from employers, as well as you notifications.',
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
@@ -538,16 +564,6 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                         ],
                       ),
                     )
-                    // Expanded(child: Row(
-                    //   children:  [
-                    //     fillColor: AppColors.mint_light,
-                    //
-                    //
-                    //     Expanded(child: RemoteStyle.remoteText('Languages (comma seperated)', widget.textEditingFluentController)),
-                    //     const SizedBox(width: 10),
-                    //     const Text('(like Spanish, German, Mandarin)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))
-                    //   ],
-                    // )),
                   ],
                 ),
 
@@ -584,7 +600,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                         children: [
                           Row(
                             children: [
-                              const Text('US ',
+                              const Text('US \$',
                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                               const SizedBox(width: 10),
                               SizedBox(width: 100, child: RemoteStyle.remoteText('min', widget.textEditingAnnualPayController)),
@@ -594,7 +610,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                             ],
                           ),
                           const SizedBox(height: 10),
-                          const Text('Only profiles with annual pay set are shown on the front page. Please write these as US dollars per year in thousands e.g. write 45 for 45,000/year. If you charge by project/day ur, make an estimate of what you make in a year if it’d be full time and enter that.',
+                          const Text('Only profiles with annual pay set are shown on the front page. Please write these as US dollars per year in thousands e.g. write 45 for \$45,000/year.\nIf you charge by project/day ur, make an estimate of what you make in a year if it’d be full time and enter that.',
                               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                         ],
                       ),
@@ -614,7 +630,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                         children: [
                           Row(
                             children: [
-                              const Text('US ',
+                              const Text('US \$',
                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                               const SizedBox(width: 10),
                               SizedBox(width: 100, child: RemoteStyle.remoteText('min', widget.textEditingHourlyPayController)),
@@ -633,28 +649,6 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                 ),
               ],
             )
-        ),
-        const SizedBox(height: 80),
-
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 100),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                // margin: const EdgeInsets.symmetric(vertical: 8),
-                padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
-                decoration: BoxDecoration(
-                  color: AppColors.mint,
-                  borderRadius: BorderRadius.circular(500),
-                ),
-                child: const Text(
-                  'Save changes',
-                  style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
-                ),
-              ),
-            ],
-          ),
         ),
         const SizedBox(height: 80),
 
@@ -833,8 +827,74 @@ class _ProfileEditViewState extends State<ProfileEditView> {
               ],
             )
         ),
+        const SizedBox(height: 80),
+        GestureDetector(
+          onTap: () async{
+            await saveProfile();
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 100),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  // margin: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
+                  decoration: BoxDecoration(
+                    color: AppColors.mint,
+                    borderRadius: BorderRadius.circular(500),
+                  ),
+                  child: const Text(
+                    'Save changes',
+                    style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         const SizedBox(height: 286)
       ],
     );
+  }
+
+  Future<void> saveProfile() async{
+    String employments = '';
+    for(int i=0; i < widget.textEditingEmploymentController.length;i++){
+      employments += '${widget.textEditingEmploymentController[i].text}/';
+    }
+    String sideProjects = '';
+    for(int i=0; i < widget.textEditingSideProjectController.length;i++){
+      sideProjects += '${widget.textEditingSideProjectController[i].text}/';
+    }
+    String educations = '';
+    for(int i=0; i < widget.textEditingEducationsController.length;i++){
+      educations += '${widget.textEditingEducationsController[i].text}/';
+    }
+
+    await userRepository.createUser(
+        HomeService.to.textEditingEmailController.text,
+        widget.textEditingUserNameController.text,
+        widget.selectedAccountTypeItem.value,
+        widget.selectProfileImage.value,
+        widget.selectedLocationItem.value,
+        widget.selectedResidencyCountryItem.value,
+        widget.selectedNationalityItem.value,
+        widget.textEditingEmailController.text,
+        widget.checkboxEmailNoti.value,
+        widget.radioGender.value,
+        widget.textEditingWebsiteController.text,
+        widget.textEditingGithubController.text,
+        widget.textEditingTwitterController.text,
+        widget.textEditingLinkedInController.text,
+        widget.textEditingInstagramController.text,
+        widget.textEditingBioController.text,
+        widget.textEditingSkillController.text,
+        widget.textEditingLanguagesController.text,
+        widget.selectDate.value? widget.selectDateTime.value.toString() : '',
+        widget.textEditingTimezoneController.text,
+        widget.textEditingAnnualPayController.text,
+        widget.textEditingHourlyPayController.text,
+        employments, sideProjects, educations);
   }
 }

@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RemoteStyle {
-  static Widget remoteText(String hintText, TextEditingController textController, {maxLines = 1}) {
+  static Widget remoteText(String hintText, TextEditingController textController, {maxLines = 1, hide = false}) {
     return TextField(
       controller: textController,
       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.black, height: 1.1),
       maxLines: maxLines,
+      obscureText: hide,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         hintText: hintText,

@@ -15,7 +15,15 @@ class HomeService extends GetxService {
   RxInt selectJobIndex = 0.obs;
 
   RxList<UserModel> userModelList =  RxList([]);
+  RxList<UserModel> selectUserModelList =  RxList([]);
   RxList<JobModel> jobModelList = RxList([]);
+  TextEditingController textEditingEmailController = TextEditingController();
+
+  List<String> skillList = ['All', 'Engineer', 'Executive', 'Senior', 'Developer', 'Finance', 'SysAdmin', 'JavaScript', 'Backend', 'Golang',
+    'Cloud', 'Medical', 'FrontEnd', 'FullStack', 'Ops', 'Design', 'React', 'InfoSec', 'Marketing', 'Mobile', 'ContentWriting',
+    'Saas', 'Recruiter', 'API', 'Sales', 'Ruby', 'Education', 'DevOps', 'Stats', 'Python', 'Node', 'English', 'NonTech', 'Video',
+    'Travel', 'QualityAssurance', 'Ecommerce', 'Teaching', 'Linux', 'Java', 'Crypto', 'Junior', 'Git', 'Legal', 'Android', 'Accounting',
+    'Admin', 'Microsoft', 'Excel', 'PHP'];
 
   @override
   void onInit() async{
@@ -31,6 +39,9 @@ class HomeService extends GetxService {
 
   Future<void> getUserModel() async{
     userModelList.value = await userRepository.getUserModel();
+    for(int i=0;i<userModelList.length;i++){
+      selectUserModelList.add(userModelList[i]);
+    }
   }
 
   Future<void> getJobModel() async{

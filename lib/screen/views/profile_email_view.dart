@@ -1,12 +1,14 @@
 import 'package:crypto_ui_web/constant/color.dart';
 import 'package:crypto_ui_web/screen/views/profile_edit_view.dart';
+import 'package:crypto_ui_web/screen/widget/remote_style.dart';
 import 'package:crypto_ui_web/services/home_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfileEmailView extends StatefulWidget {
-  const ProfileEmailView({super.key});
+  ProfileEmailView({super.key});
+  TextEditingController textEditingPwdController = TextEditingController();
 
   @override
   State<ProfileEmailView> createState() => _ProfileEmailViewState();
@@ -24,33 +26,30 @@ class _ProfileEmailViewState extends State<ProfileEmailView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('email : '),
+                const Text('Email : '),
                 const SizedBox(width: 20),
-                Container(
-                  width: 100,
-                  height: 30,
-                  color: Colors.grey,
-                )
+                SizedBox(
+                  width: 300,
+                    child: RemoteStyle.remoteText('Email input', HomeService.to.textEditingEmailController)),
               ],
             ),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('password : '),
+                const Text('Password : '),
                 const SizedBox(width: 20),
-                Container(
-                  width: 100,
-                  height: 30,
-                  color: Colors.grey,
-                )
-
+                SizedBox(
+                    width: 300,
+                    child: RemoteStyle.remoteText('Password input', widget.textEditingPwdController, hide: true)),
               ],
             ),
             const SizedBox(height: 50),
             GestureDetector(
               onTap: () {
-                HomeService.to.profileType.value = 1;
+                if(HomeService.to.textEditingEmailController.text != '' && widget.textEditingPwdController.text != ''){
+                  HomeService.to.profileType.value = 1;
+                }
               },
               child: Container(
                 // margin: const EdgeInsets.symmetric(vertical: 8),

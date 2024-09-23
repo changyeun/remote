@@ -21,7 +21,7 @@ class HomeView extends StatelessWidget {
         ),
 
         //home list
-        ConstrainedBox(
+        Obx(() => ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: 1532,
           ),
@@ -106,7 +106,7 @@ class HomeView extends StatelessWidget {
                   ],
                 ),
               )),
-        ),
+        )),
 
         Container(
           height: 400,

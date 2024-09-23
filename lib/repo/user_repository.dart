@@ -30,6 +30,7 @@ class UserRepository{
         'employments': employments, 'sideProjects': sideProjects, 'educations': educations
       });
       HomeService.to.type.value = 0;
+      HomeService.to.getUserModel();
       return true;
     } catch (e) {
       print(e);

@@ -22,7 +22,7 @@ class _ProfileEmailViewState extends State<ProfileEmailView> {
       crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-            const SizedBox(height: 100),
+            const SizedBox(height: 200),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

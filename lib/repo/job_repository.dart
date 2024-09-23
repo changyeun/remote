@@ -21,7 +21,7 @@ class JobsRepository{
       String linkOrEmail, String location, String aboutRole, String responsibility, String qualifications, String benefits,
       String companyName, String companyHQ, String photo, String website, String email, String des) async {
     try {
-      await Supabase.instance.client.from('users').upsert({
+      await Supabase.instance.client.from('jobs').upsert({
         'title' : title, 'category' : category, 'skill' : skill, 'worldWide' : worldWide,
         'salaryRange' : salaryRange, 'jobType' : jobType, 'linkOrEmail' : linkOrEmail, 'location':location,
         'aboutRole' : aboutRole, 'responsibility': responsibility, 'qualifications': qualifications,
@@ -29,6 +29,7 @@ class JobsRepository{
         'website': website, 'email': email, 'des': des
       });
       HomeService.to.type.value = 0;
+      HomeService.to.getJobModel();
       return true;
     } catch (e) {
       print(e);

@@ -93,19 +93,22 @@ class _ProfileListViewState extends State<ProfileListView> {
                         margin: const EdgeInsets.only(right: 22, bottom: 22),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              width: 256,
-                              height: 256,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  image: HomeService.to.selectUserModelList[index].profilePhoto == ''?
-                                  const DecorationImage(
-                                      image: AssetImage('assets/images/image_empty_profile.png'),
-                                      fit: BoxFit.fill):
-                                  DecorationImage(
-                                      image: NetworkImage(HomeService.to.selectUserModelList[index].profilePhoto ?? ''),
-                                      fit: BoxFit.fill)
+                            Center(
+                              child: Container(
+                                width: 256,
+                                height: 256,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    image: HomeService.to.selectUserModelList[index].profilePhoto == ''?
+                                    const DecorationImage(
+                                        image: AssetImage('assets/images/image_empty_profile.png'),
+                                        fit: BoxFit.fill):
+                                    DecorationImage(
+                                        image: NetworkImage(HomeService.to.selectUserModelList[index].profilePhoto ?? ''),
+                                        fit: BoxFit.fill)
+                                ),
                               ),
                             ),
                             const SizedBox(height: 10),
@@ -122,7 +125,7 @@ class _ProfileListViewState extends State<ProfileListView> {
                                     children: List.generate(skillList.length ?? 0,
                                             (index) => Container(
                                           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
-                                          margin: const EdgeInsets.only(right: 10),
+                                          margin: const EdgeInsets.only(right: 10, bottom: 10),
                                           decoration: BoxDecoration(
                                             color: AppColors.mint_light,
                                             borderRadius: BorderRadius.circular(4),

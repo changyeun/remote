@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:crypto_ui_web/constant/color.dart';
 import 'package:crypto_ui_web/screen/widget/remote_style.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class JobPostView extends StatefulWidget {
   JobPostView({super.key});
@@ -29,6 +33,8 @@ class JobPostView extends StatefulWidget {
   //radio
   RxString radioWorldwide = 'Yes'.obs;
   RxString radioJobType = 'Full-Time'.obs;
+
+  RxString selectJobImage = ''.obs;
 
   @override
   State<JobPostView> createState() => _JobPostViewState();
@@ -469,7 +475,52 @@ class _JobPostViewState extends State<JobPostView> {
                     ),
                     const SizedBox(height: 10),
                     //rust edit
-                    RemoteStyle.remoteText('Placeholder', widget.textEditingCompanyNameController),
+                    Obx(() => GestureDetector(
+                      onTap: () async{
+                        try {
+                          FilePickerResult? result = await FilePicker.platform.pickFiles();
+                          if (result != null) {
+                            String urlStr = 'Jobs/${Random.secure().nextInt(100000)}.png';
+                            await Supabase.instance.client.storage
+                                .from('Job').uploadBinary(urlStr, result.files.single.bytes!, retryAttempts: 3);
+                            widget.selectJobImage.value = Supabase.instance.client.storage.from('Job').getPublicUrl(urlStr);
+                          } else {
+                            // 사용자가 파일 선택을 취소한 경우
+                            print('User canceled the picker');
+                          }
+                          // imgUrl
+                        } catch (exception, stackTrace) {
+                          print(exception);
+                          // await FirebaseCrashlytics.instance.recordError(exception, stackTrace);
+                        }
+                      },
+                      child: Container(
+                        width: Get.width,
+                        height: 160,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        decoration: BoxDecoration(
+                          color: AppColors.mint_light,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: widget.selectJobImage.value == ''?Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text('Click or drag your photo here to upload. Aquare dimension works best.',
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1.3,
+                                      color:AppColors.grey1)),
+                              const SizedBox(height: 20),
+                              Image.asset(
+                                'assets/images/img_picture.png',
+                                fit: BoxFit.contain,
+                                width: 50,
+                                height: 50,
+                              ),
+                            ],
+                          ): Image.network(widget.selectJobImage.value,fit: BoxFit.fitHeight),
+                        ),
+                      ),
+                    )),
                   ],
                 ),
 

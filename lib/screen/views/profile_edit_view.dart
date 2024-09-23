@@ -1,12 +1,16 @@
+import 'dart:io';
 import 'dart:js_interop';
 
 import 'package:crypto_ui_web/constant/color.dart';
 import 'package:crypto_ui_web/screen/widget/remote_style.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:math';
 
 class ProfileEditView extends StatefulWidget {
   ProfileEditView({super.key});
@@ -42,6 +46,12 @@ class ProfileEditView extends StatefulWidget {
   //radio
   RxString radioGender = 'Man'.obs;
   RxBool checkboxEmailNoti = true.obs;
+
+  //date
+  RxBool selectDate = true.obs;
+  Rx<DateTime> selectDateTime = Rx<DateTime>(DateTime.now());
+
+  RxString selectProfileImage = ''.obs;
 
   @override
   State<ProfileEditView> createState() => _ProfileEditViewState();
@@ -127,15 +137,41 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
-                    Expanded(child:
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Image.asset(
-                        'assets/images/image_profile_empty_profile.png',
+                    Flexible(child:
+                    Obx(() => GestureDetector(
+                      onTap: () async{
+                        try {
+                          FilePickerResult? result = await FilePicker.platform.pickFiles();
+                          if (result != null) {
+                            String urlStr = 'profiles/${Random.secure().nextInt(100000)}.png';
+                            await Supabase.instance.client.storage
+                                .from('Profile').uploadBinary(urlStr, result.files.single.bytes!, retryAttempts: 3);
+                            widget.selectProfileImage.value = Supabase.instance.client.storage.from('Profile').getPublicUrl(urlStr);
+                          } else {
+                            // 사용자가 파일 선택을 취소한 경우
+                            print('User canceled the picker');
+                          }
+                          // imgUrl
+                        } catch (exception, stackTrace) {
+                          print(exception);
+                          // await FirebaseCrashlytics.instance.recordError(exception, stackTrace);
+                        }
+                      },
+                      child: Container(
                         width: 168,
                         height: 168,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(500),
+                            image: widget.selectProfileImage.value == ''?
+                                const DecorationImage(
+                                image: AssetImage('assets/images/image_empty_profile.png'),
+                                fit: BoxFit.fill):
+                                DecorationImage(
+                                image: NetworkImage(widget.selectProfileImage.value),
+                                fit: BoxFit.fill)
+                        ),
                       ),
-                    ),),
+                    ))),
                   ],
                 ),
 
@@ -426,10 +462,10 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                   ],
                 ),
 
-                //rust
                 //Available for work
                 const SizedBox(height: 40),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Expanded(child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -440,13 +476,78 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
-                    Expanded(child: Row(
-                      children:  [
-                        Expanded(child: RemoteStyle.remoteText('Languages (comma seperated)', widget.textEditingFluentController)),
-                        const SizedBox(width: 10),
-                        const Text('(like Spanish, German, Mandarin)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))
-                      ],
-                    )),
+
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Obx(() => Checkbox(value: widget.selectDate.value, onChanged: (value){widget.selectDate.value = value!;})),
+                          const SizedBox(width: 10),
+                          const Text('form', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1, color: AppColors.black)),
+                          const SizedBox(width: 10),
+                          Stack(
+                            alignment: Alignment.centerLeft,
+                            children: [
+                              Obx(() => GestureDetector(
+                                onTap: () async{
+                                  if(widget.selectDate.value){
+                                    widget.selectDateTime.value = await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(3000)) ?? DateTime.now();
+                                  }
+                                },
+                                child: Container(
+                                  alignment: Alignment.centerLeft,
+                                  width: 166,
+                                  height: 50,
+                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.mint_light,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child:Text('${widget.selectDateTime.value.year}-${widget.selectDateTime.value.month}-${widget.selectDateTime.value.day}',
+                                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3,
+                                          color:widget.selectDate.value? AppColors.black: AppColors.grey1)),
+                                ),
+                              )),
+
+                              Positioned(
+                                left: 130,
+                                top: 13,
+                                child: GestureDetector(
+                                  onTap: () async{
+                                    if(widget.selectDate.value){
+                                      widget.selectDateTime.value = await showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime(2000),
+                                          lastDate: DateTime(3000)) ?? DateTime.now();
+                                    }
+                                  },
+                                  child: Image.asset(
+                                    'assets/images/img_calendar.png',
+                                    width: 24,
+                                    height: 24,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                    // Expanded(child: Row(
+                    //   children:  [
+                    //     fillColor: AppColors.mint_light,
+                    //
+                    //
+                    //     Expanded(child: RemoteStyle.remoteText('Languages (comma seperated)', widget.textEditingFluentController)),
+                    //     const SizedBox(width: 10),
+                    //     const Text('(like Spanish, German, Mandarin)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))
+                    //   ],
+                    // )),
                   ],
                 ),
 

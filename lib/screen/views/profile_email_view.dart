@@ -45,22 +45,25 @@ class _ProfileEmailViewState extends State<ProfileEmailView> {
               ],
             ),
             const SizedBox(height: 50),
-            GestureDetector(
-              onTap: () {
-                if(HomeService.to.textEditingEmailController.text != '' && widget.textEditingPwdController.text != ''){
-                  HomeService.to.profileType.value = 1;
-                }
-              },
-              child: Container(
-                // margin: const EdgeInsets.symmetric(vertical: 8),
-                padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
-                decoration: BoxDecoration(
-                  color: AppColors.mint,
-                  borderRadius: BorderRadius.circular(500),
-                ),
-                child: const Text(
-                  'Next Profile',
-                  style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () {
+                  if(HomeService.to.textEditingEmailController.text != '' && widget.textEditingPwdController.text != ''){
+                    HomeService.to.profileType.value = 1;
+                  }
+                },
+                child: Container(
+                  // margin: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
+                  decoration: BoxDecoration(
+                    color: AppColors.mint,
+                    borderRadius: BorderRadius.circular(500),
+                  ),
+                  child: const Text(
+                    'Next Profile',
+                    style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                  ),
                 ),
               ),
             ),

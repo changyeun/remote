@@ -35,35 +35,38 @@ class _ProfileListViewState extends State<ProfileListView> {
             width: Get.width,
             child: Wrap(
               children: List.generate(HomeService.to.skillList.length,
-                      (index) => GestureDetector(
-                        onTap: (){
-                          widget.selectTag.value = HomeService.to.skillList[index];
-                          HomeService.to.selectUserModelList.value = [];
-                          if(widget.selectTag.value == 'All' || widget.selectTag.value == ''){
-                            for(int i=0;i<HomeService.to.userModelList.length;i++){
-                              HomeService.to.selectUserModelList.add(HomeService.to.userModelList[i]);
-                            }
-                          } else{
-                            for(int i=0; i<HomeService.to.userModelList.length; i++){
-                              List<String> skillList = (HomeService.to.userModelList[i].skills ?? '').split(',');
-                              for(int i=0;i<skillList.length;i++){
-                                skillList[i] = skillList[i].replaceAll(' ', '');
-                              }
-                              if(skillList.contains(widget.selectTag.value)){
+                      (index) => MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: (){
+                            widget.selectTag.value = HomeService.to.skillList[index];
+                            HomeService.to.selectUserModelList.value = [];
+                            if(widget.selectTag.value == 'All' || widget.selectTag.value == ''){
+                              for(int i=0;i<HomeService.to.userModelList.length;i++){
                                 HomeService.to.selectUserModelList.add(HomeService.to.userModelList[i]);
                               }
+                            } else{
+                              for(int i=0; i<HomeService.to.userModelList.length; i++){
+                                List<String> skillList = (HomeService.to.userModelList[i].skills ?? '').split(',');
+                                for(int i=0;i<skillList.length;i++){
+                                  skillList[i] = skillList[i].replaceAll(' ', '');
+                                }
+                                if(skillList.contains(widget.selectTag.value)){
+                                  HomeService.to.selectUserModelList.add(HomeService.to.userModelList[i]);
+                                }
+                              }
                             }
-                          }
-                        },
-                        child: Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
-                                            margin: const EdgeInsets.only(right: 20, bottom: 20),
-                                            decoration: BoxDecoration(
-                        color: AppColors.mint_light,
-                        borderRadius: BorderRadius.circular(4),
+                          },
+                          child: Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
+                                              margin: const EdgeInsets.only(right: 20, bottom: 20),
+                                              decoration: BoxDecoration(
+                          color: AppColors.mint_light,
+                          borderRadius: BorderRadius.circular(4),
+                                              ),
+                                              child: Text(HomeService.to.skillList[index], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.mint)),
                                             ),
-                                            child: Text(HomeService.to.skillList[index], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.mint)),
-                                          ),
+                        ),
                       )),
             ),
           ),
@@ -154,20 +157,23 @@ class _ProfileListViewState extends State<ProfileListView> {
             children: [
               const Text('Create your profile now and get matched with thousands of companies hiring remotely', style: TextStyle(fontSize: 36, fontWeight: FontWeight.w400, height: 1.5, color: Colors.white)),
               const SizedBox(height: 20),
-              GestureDetector(
-                onTap: (){
-                  HomeService.to.type.value = 1;
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 11.5),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(500),
-                  ),
-                  child: const Text(
-                    'Create Profile',
-                    style: TextStyle(fontSize: 14, color: AppColors.mint, height: 1, fontWeight: FontWeight.w500),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: (){
+                    HomeService.to.type.value = 1;
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 11.5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(500),
+                    ),
+                    child: const Text(
+                      'Create Profile',
+                      style: TextStyle(fontSize: 14, color: AppColors.mint, height: 1, fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
               ),

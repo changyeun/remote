@@ -85,28 +85,31 @@ class _ProfileEditViewState extends State<ProfileEditView> {
           fit: BoxFit.contain,
         ),
         const SizedBox(height: 80),
-        GestureDetector(
-          onTap: () async{
-            await saveProfile();
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 100),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  // margin: const EdgeInsets.symmetric(vertical: 8),
-                  padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
-                  decoration: BoxDecoration(
-                    color: AppColors.mint,
-                    borderRadius: BorderRadius.circular(500),
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () async{
+              await saveProfile();
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 100),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    // margin: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
+                    decoration: BoxDecoration(
+                      color: AppColors.mint,
+                      borderRadius: BorderRadius.circular(500),
+                    ),
+                    child: const Text(
+                      'Save changes',
+                      style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                    ),
                   ),
-                  child: const Text(
-                    'Save changes',
-                    style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -161,37 +164,40 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                       ],
                     )),
                     Flexible(child:
-                    Obx(() => GestureDetector(
-                      onTap: () async{
-                        try {
-                          FilePickerResult? result = await FilePicker.platform.pickFiles();
-                          if (result != null) {
-                            String urlStr = 'profiles/${Random.secure().nextInt(100000)}.png';
-                            await Supabase.instance.client.storage
-                                .from('Profile').uploadBinary(urlStr, result.files.single.bytes!, retryAttempts: 3);
-                            widget.selectProfileImage.value = Supabase.instance.client.storage.from('Profile').getPublicUrl(urlStr);
-                          } else {
-                            // 사용자가 파일 선택을 취소한 경우
-                            print('User canceled the picker');
+                    Obx(() => MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () async{
+                          try {
+                            FilePickerResult? result = await FilePicker.platform.pickFiles();
+                            if (result != null) {
+                              String urlStr = 'profiles/${Random.secure().nextInt(100000)}.png';
+                              await Supabase.instance.client.storage
+                                  .from('Profile').uploadBinary(urlStr, result.files.single.bytes!, retryAttempts: 3);
+                              widget.selectProfileImage.value = Supabase.instance.client.storage.from('Profile').getPublicUrl(urlStr);
+                            } else {
+                              // 사용자가 파일 선택을 취소한 경우
+                              print('User canceled the picker');
+                            }
+                            // imgUrl
+                          } catch (exception, stackTrace) {
+                            print(exception);
+                            // await FirebaseCrashlytics.instance.recordError(exception, stackTrace);
                           }
-                          // imgUrl
-                        } catch (exception, stackTrace) {
-                          print(exception);
-                          // await FirebaseCrashlytics.instance.recordError(exception, stackTrace);
-                        }
-                      },
-                      child: Container(
-                        width: 168,
-                        height: 168,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(500),
-                            image: widget.selectProfileImage.value == ''?
-                                const DecorationImage(
-                                image: AssetImage('assets/images/image_empty_profile.png'),
-                                fit: BoxFit.fill):
-                                DecorationImage(
-                                image: NetworkImage(widget.selectProfileImage.value),
-                                fit: BoxFit.fill)
+                        },
+                        child: Container(
+                          width: 168,
+                          height: 168,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(500),
+                              image: widget.selectProfileImage.value == ''?
+                                  const DecorationImage(
+                                  image: AssetImage('assets/images/image_empty_profile.png'),
+                                  fit: BoxFit.fill):
+                                  DecorationImage(
+                                  image: NetworkImage(widget.selectProfileImage.value),
+                                  fit: BoxFit.fill)
+                          ),
                         ),
                       ),
                     ))),
@@ -510,34 +516,8 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                           Stack(
                             alignment: Alignment.centerLeft,
                             children: [
-                              Obx(() => GestureDetector(
-                                onTap: () async{
-                                  if(widget.selectDate.value){
-                                    widget.selectDateTime.value = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(2000),
-                                        lastDate: DateTime(3000)) ?? DateTime.now();
-                                  }
-                                },
-                                child: Container(
-                                  alignment: Alignment.centerLeft,
-                                  width: 166,
-                                  height: 50,
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.mint_light,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child:Text('${widget.selectDateTime.value.year}-${widget.selectDateTime.value.month}-${widget.selectDateTime.value.day}',
-                                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3,
-                                          color:widget.selectDate.value? AppColors.black: AppColors.grey1)),
-                                ),
-                              )),
-
-                              Positioned(
-                                left: 130,
-                                top: 13,
+                              Obx(() => MouseRegion(
+                                cursor: SystemMouseCursors.click,
                                 child: GestureDetector(
                                   onTap: () async{
                                     if(widget.selectDate.value){
@@ -548,11 +528,43 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                                           lastDate: DateTime(3000)) ?? DateTime.now();
                                     }
                                   },
-                                  child: Image.asset(
-                                    'assets/images/img_calendar.png',
-                                    width: 24,
-                                    height: 24,
-                                    fit: BoxFit.contain,
+                                  child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    width: 166,
+                                    height: 50,
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.mint_light,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child:Text('${widget.selectDateTime.value.year}-${widget.selectDateTime.value.month}-${widget.selectDateTime.value.day}',
+                                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3,
+                                            color:widget.selectDate.value? AppColors.black: AppColors.grey1)),
+                                  ),
+                                ),
+                              )),
+
+                              Positioned(
+                                left: 130,
+                                top: 13,
+                                child: MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: GestureDetector(
+                                    onTap: () async{
+                                      if(widget.selectDate.value){
+                                        widget.selectDateTime.value = await showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(2000),
+                                            lastDate: DateTime(3000)) ?? DateTime.now();
+                                      }
+                                    },
+                                    child: Image.asset(
+                                      'assets/images/img_calendar.png',
+                                      width: 24,
+                                      height: 24,
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -690,19 +702,22 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        onTap:(){
-                          widget.textEditingEmploymentController.add(TextEditingController());
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                          decoration: BoxDecoration(
-                            color: AppColors.mint,
-                            borderRadius: BorderRadius.circular(500),
-                          ),
-                          child: const Text(
-                            'Add a new row',
-                            style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap:(){
+                            widget.textEditingEmploymentController.add(TextEditingController());
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                            decoration: BoxDecoration(
+                              color: AppColors.mint,
+                              borderRadius: BorderRadius.circular(500),
+                            ),
+                            child: const Text(
+                              'Add a new row',
+                              style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                            ),
                           ),
                         ),
                       ),
@@ -801,19 +816,22 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        onTap:(){
-                          widget.textEditingEducationsController.add(TextEditingController());
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                          decoration: BoxDecoration(
-                            color: AppColors.mint,
-                            borderRadius: BorderRadius.circular(500),
-                          ),
-                          child: const Text(
-                            'Add a new row',
-                            style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap:(){
+                            widget.textEditingEducationsController.add(TextEditingController());
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                            decoration: BoxDecoration(
+                              color: AppColors.mint,
+                              borderRadius: BorderRadius.circular(500),
+                            ),
+                            child: const Text(
+                              'Add a new row',
+                              style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                            ),
                           ),
                         ),
                       ),
@@ -825,28 +843,31 @@ class _ProfileEditViewState extends State<ProfileEditView> {
             )
         ),
         const SizedBox(height: 80),
-        GestureDetector(
-          onTap: () async{
-            await saveProfile();
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 100),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  // margin: const EdgeInsets.symmetric(vertical: 8),
-                  padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
-                  decoration: BoxDecoration(
-                    color: AppColors.mint,
-                    borderRadius: BorderRadius.circular(500),
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () async{
+              await saveProfile();
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 100),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    // margin: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
+                    decoration: BoxDecoration(
+                      color: AppColors.mint,
+                      borderRadius: BorderRadius.circular(500),
+                    ),
+                    child: const Text(
+                      'Save changes',
+                      style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                    ),
                   ),
-                  child: const Text(
-                    'Save changes',
-                    style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

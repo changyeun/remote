@@ -57,16 +57,42 @@ class _JobPostViewState extends State<JobPostView> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                // margin: const EdgeInsets.symmetric(vertical: 8),
-                padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
-                decoration: BoxDecoration(
-                  color: AppColors.mint,
-                  borderRadius: BorderRadius.circular(500),
-                ),
-                child: const Text(
-                  'Save and Post',
-                  style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () async{
+                    await jobsRepository.createJob(
+                        widget.textEditingTitleController.text,
+                        widget.selectedCategoryItem.value,
+                        widget.selectedSkillItem.value,
+                        widget.radioWorldwide.value,
+                        widget.selectedSalaryRangeItem.value,
+                        widget.radioJobType.value,
+                        widget.textEditingLinkOrEmailController.text,
+                        widget.textEditingLocationController.text,
+                        widget.textEditingAboutRoleController.text,
+                        widget.textEditingResponseController.text,
+                        widget.textEditingQualityController.text,
+                        widget.textEditingBenefitController.text,
+                        widget.textEditingCompanyNameController.text,
+                        widget.textEditingCompanyHQController.text,
+                        widget.selectJobImage.value,
+                        widget.textEditingWebsiteController.text,
+                        widget.textEditingEmailController.text,
+                        widget.textEditingDesController.text);
+                  },
+                  child: Container(
+                    // margin: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
+                    decoration: BoxDecoration(
+                      color: AppColors.mint,
+                      borderRadius: BorderRadius.circular(500),
+                    ),
+                    child: const Text(
+                      'Save and Post',
+                      style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -477,49 +503,52 @@ class _JobPostViewState extends State<JobPostView> {
                     ),
                     const SizedBox(height: 10),
                     //rust edit
-                    Obx(() => GestureDetector(
-                      onTap: () async{
-                        try {
-                          FilePickerResult? result = await FilePicker.platform.pickFiles();
-                          if (result != null) {
-                            String urlStr = 'Jobs/${Random.secure().nextInt(100000)}.png';
-                            await Supabase.instance.client.storage
-                                .from('Job').uploadBinary(urlStr, result.files.single.bytes!, retryAttempts: 3);
-                            widget.selectJobImage.value = Supabase.instance.client.storage.from('Job').getPublicUrl(urlStr);
-                          } else {
-                            // 사용자가 파일 선택을 취소한 경우
-                            print('User canceled the picker');
+                    Obx(() => MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () async{
+                          try {
+                            FilePickerResult? result = await FilePicker.platform.pickFiles();
+                            if (result != null) {
+                              String urlStr = 'Jobs/${Random.secure().nextInt(100000)}.png';
+                              await Supabase.instance.client.storage
+                                  .from('Job').uploadBinary(urlStr, result.files.single.bytes!, retryAttempts: 3);
+                              widget.selectJobImage.value = Supabase.instance.client.storage.from('Job').getPublicUrl(urlStr);
+                            } else {
+                              // 사용자가 파일 선택을 취소한 경우
+                              print('User canceled the picker');
+                            }
+                            // imgUrl
+                          } catch (exception, stackTrace) {
+                            print(exception);
+                            // await FirebaseCrashlytics.instance.recordError(exception, stackTrace);
                           }
-                          // imgUrl
-                        } catch (exception, stackTrace) {
-                          print(exception);
-                          // await FirebaseCrashlytics.instance.recordError(exception, stackTrace);
-                        }
-                      },
-                      child: Container(
-                        width: Get.width,
-                        height: 160,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        decoration: BoxDecoration(
-                          color: AppColors.mint_light,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: widget.selectJobImage.value == ''?Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('Click or drag your photo here to upload. Aquare dimension works best.',
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1.3,
-                                      color:AppColors.grey1)),
-                              const SizedBox(height: 20),
-                              Image.asset(
-                                'assets/images/img_picture.png',
-                                fit: BoxFit.contain,
-                                width: 50,
-                                height: 50,
-                              ),
-                            ],
-                          ): Image.network(widget.selectJobImage.value,fit: BoxFit.fitHeight),
+                        },
+                        child: Container(
+                          width: Get.width,
+                          height: 160,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          decoration: BoxDecoration(
+                            color: AppColors.mint_light,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: widget.selectJobImage.value == ''?Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('Click or drag your photo here to upload. Aquare dimension works best.',
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1.3,
+                                        color:AppColors.grey1)),
+                                const SizedBox(height: 20),
+                                Image.asset(
+                                  'assets/images/img_picture.png',
+                                  fit: BoxFit.contain,
+                                  width: 50,
+                                  height: 50,
+                                ),
+                              ],
+                            ): Image.network(widget.selectJobImage.value,fit: BoxFit.fitHeight),
+                          ),
                         ),
                       ),
                     )),
@@ -615,38 +644,41 @@ class _JobPostViewState extends State<JobPostView> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              GestureDetector(
-                onTap: () async{
-                  await jobsRepository.createJob(
-                      widget.textEditingTitleController.text,
-                    widget.selectedCategoryItem.value,
-                    widget.selectedSkillItem.value,
-                    widget.radioWorldwide.value,
-                    widget.selectedSalaryRangeItem.value,
-                    widget.radioJobType.value,
-                    widget.textEditingLinkOrEmailController.text,
-                    widget.textEditingLocationController.text,
-                    widget.textEditingAboutRoleController.text,
-                    widget.textEditingResponseController.text,
-                    widget.textEditingQualityController.text,
-                    widget.textEditingBenefitController.text,
-                    widget.textEditingCompanyNameController.text,
-                    widget.textEditingCompanyHQController.text,
-                    widget.selectJobImage.value,
-                    widget.textEditingWebsiteController.text,
-                    widget.textEditingEmailController.text,
-                    widget.textEditingDesController.text);
-                },
-                child: Container(
-                  // margin: const EdgeInsets.symmetric(vertical: 8),
-                  padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
-                  decoration: BoxDecoration(
-                    color: AppColors.mint,
-                    borderRadius: BorderRadius.circular(500),
-                  ),
-                  child: const Text(
-                    'Save and Post',
-                    style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () async{
+                    await jobsRepository.createJob(
+                        widget.textEditingTitleController.text,
+                      widget.selectedCategoryItem.value,
+                      widget.selectedSkillItem.value,
+                      widget.radioWorldwide.value,
+                      widget.selectedSalaryRangeItem.value,
+                      widget.radioJobType.value,
+                      widget.textEditingLinkOrEmailController.text,
+                      widget.textEditingLocationController.text,
+                      widget.textEditingAboutRoleController.text,
+                      widget.textEditingResponseController.text,
+                      widget.textEditingQualityController.text,
+                      widget.textEditingBenefitController.text,
+                      widget.textEditingCompanyNameController.text,
+                      widget.textEditingCompanyHQController.text,
+                      widget.selectJobImage.value,
+                      widget.textEditingWebsiteController.text,
+                      widget.textEditingEmailController.text,
+                      widget.textEditingDesController.text);
+                  },
+                  child: Container(
+                    // margin: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
+                    decoration: BoxDecoration(
+                      color: AppColors.mint,
+                      borderRadius: BorderRadius.circular(500),
+                    ),
+                    child: const Text(
+                      'Save and Post',
+                      style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
               ),

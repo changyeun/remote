@@ -21,22 +21,25 @@ class _JobDetailViewState extends State<JobDetailView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 120),
-          GestureDetector(
-            onTap: (){
-              HomeService.to.type.value = 0;
-            },
-            child: Container(
-              color: Colors.transparent,
-              child: Row(
-                children: [
-                  Image.asset(
-                    'assets/images/arrow-right.png',
-                    width: 18,
-                    height: 18,
-                  ),
-                  const SizedBox(width: 4),
-                  const Text('Back to all jobs', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.mint),),
-                ],
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: (){
+                HomeService.to.type.value = 0;
+              },
+              child: Container(
+                color: Colors.transparent,
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/arrow-right.png',
+                      width: 18,
+                      height: 18,
+                    ),
+                    const SizedBox(width: 4),
+                    const Text('Back to all jobs', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.mint),),
+                  ],
+                ),
               ),
             ),
           ),
@@ -284,28 +287,31 @@ class _JobDetailViewState extends State<JobDetailView> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () async{
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () async{
 
-                  },
-                  child: Container(
-                    // padding: const EdgeInsets.symmetric(horizontal: 100),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          // margin: const EdgeInsets.symmetric(vertical: 8),
-                          padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
-                          decoration: BoxDecoration(
-                            color: AppColors.mint,
-                            borderRadius: BorderRadius.circular(500),
+                    },
+                    child: Container(
+                      // padding: const EdgeInsets.symmetric(horizontal: 100),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            // margin: const EdgeInsets.symmetric(vertical: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 58, vertical: 15),
+                            decoration: BoxDecoration(
+                              color: AppColors.mint,
+                              borderRadius: BorderRadius.circular(500),
+                            ),
+                            child: const Text(
+                              'Apply',
+                              style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
+                            ),
                           ),
-                          child: const Text(
-                            'Apply',
-                            style: TextStyle(fontSize: 14, color: Colors.white, height: 1, fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

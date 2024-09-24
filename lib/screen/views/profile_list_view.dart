@@ -152,7 +152,7 @@ class _ProfileListViewState extends State<ProfileListView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('Live Remote island, work from anywhere.', style: TextStyle(fontSize: 36, fontWeight: FontWeight.w400, height: 1.5, color: Colors.white)),
+              const Text('Create your profile now and get matched with thousands of companies hiring remotely', style: TextStyle(fontSize: 36, fontWeight: FontWeight.w400, height: 1.5, color: Colors.white)),
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: (){
@@ -166,7 +166,7 @@ class _ProfileListViewState extends State<ProfileListView> {
                     borderRadius: BorderRadius.circular(500),
                   ),
                   child: const Text(
-                    'Sign up for free',
+                    'Create Profile',
                     style: TextStyle(fontSize: 14, color: AppColors.mint, height: 1, fontWeight: FontWeight.w500),
                   ),
                 ),

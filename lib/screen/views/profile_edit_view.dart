@@ -51,9 +51,10 @@ class ProfileEditView extends StatefulWidget {
   RxBool selectDate = true.obs;
   Rx<DateTime> selectDateTime = Rx<DateTime>(DateTime.now());
 
-
   //etc
   RxString selectProfileImage = ''.obs;
+
+  bool isInit = false;
 
   @override
   State<ProfileEditView> createState() => _ProfileEditViewState();
@@ -62,6 +63,21 @@ class ProfileEditView extends StatefulWidget {
 class _ProfileEditViewState extends State<ProfileEditView> {
   @override
   Widget build(BuildContext context) {
+    if (!widget.isInit) {
+      TextEditingController textEditingEmploymentController = TextEditingController();
+      textEditingEmploymentController.text = '202305 - 202406 : venture capitalist @Jesttrack';
+      widget.textEditingEmploymentController.add(textEditingEmploymentController);
+
+      TextEditingController textEditingSideProjectController = TextEditingController();
+      textEditingSideProjectController.text = '202305 - 202406 : venture capitalist @Jesttrack';
+      widget.textEditingSideProjectController.add(textEditingSideProjectController);
+
+      TextEditingController textEditingEducationsController = TextEditingController();
+      textEditingEducationsController.text = '202305 - 202406 : venture capitalist @Jesttrack';
+      widget.textEditingEducationsController.add(textEditingEducationsController);
+      widget.isInit = true;
+    }
+
     return Column(
       children: [
         Image.asset(

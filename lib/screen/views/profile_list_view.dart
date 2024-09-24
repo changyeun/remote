@@ -97,8 +97,8 @@ class _ProfileListViewState extends State<ProfileListView> {
                           children: [
                             Center(
                               child: Container(
-                                width: 256,
-                                height: 256,
+                                width: 260,
+                                height: 260,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
                                     image: HomeService.to.selectUserModelList[index].profilePhoto == ''?

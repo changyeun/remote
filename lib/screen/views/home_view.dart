@@ -1,11 +1,17 @@
 import 'package:crypto_ui_web/constant/color.dart';
 import 'package:crypto_ui_web/screen/views/profile_list_view.dart';
+import 'package:crypto_ui_web/screen/widget/remote_style.dart';
 import 'package:crypto_ui_web/services/home_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  HomeView({super.key});
+
+  RxString selectedCategoryItem = 'Please Select'.obs;
+  RxString selectedLocationItem = 'Please Select'.obs;
+  RxString selectedSalaryItem = 'Please Select'.obs;
+  RxString selectedSkillItem = 'Please Select'.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +25,67 @@ class HomeView extends StatelessWidget {
           'assets/images/home_section_2.png',
           fit: BoxFit.contain,
         ),
+        const SizedBox(height: 70),
+
+        Container(
+          alignment: Alignment.centerLeft,
+          margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+          child: Wrap(
+            children: [
+              GestureDetector(
+                onTap: (){
+                  selectedCategoryItem.value = 'Please Select';
+                  selectedLocationItem.value = 'Please Select';
+                  selectedSalaryItem.value = 'Please Select';
+                  selectedSkillItem.value = 'Please Select';
+                  HomeService.to.selectJobModelList.value = [];
+                  for(int i=0;i<HomeService.to.jobModelList.length;i++){
+                    HomeService.to.selectJobModelList.add(HomeService.to.jobModelList[i]);
+                  }
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(500),
+                    color: Colors.white,
+                    border: Border.all(color: AppColors.grey2, width: 1),
+                  ),
+                  child: const Text(
+                    'ALL',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.black, height: 1.1),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 14),
+              SizedBox(
+                width: 235,
+                  child: RemoteStyle.remoteMainDropdown(HomeService.to.categoryList, selectedCategoryItem, (value) async {
+                    selectedDropDownChanged(value as String, selectedCategoryItem);
+                  })),
+              const SizedBox(width: 14),
+              SizedBox(
+                  width: 300,
+                  child: RemoteStyle.remoteMainDropdown(HomeService.to.locationList, selectedLocationItem, (value) async {
+                    selectedDropDownChanged(value as String, selectedLocationItem);
+                  })),
+              const SizedBox(width: 14),
+              SizedBox(
+                  width: 220,
+                  child: RemoteStyle.remoteMainDropdown(HomeService.to.salaryList, selectedSalaryItem, (value) async {
+                    selectedDropDownChanged(value as String, selectedSalaryItem);
+                  })),
+              const SizedBox(width: 14),
+              SizedBox(
+                  width: 170,
+                  child: RemoteStyle.remoteMainDropdown(HomeService.to.homeSkillList, selectedSkillItem, (value) async {
+                    selectedDropDownChanged(value as String, selectedSkillItem);
+                  })),
+
+            ],
+          ),
+        ),
+        const SizedBox(height: 38),
+
 
         //home list
         Obx(() => ConstrainedBox(
@@ -27,7 +94,7 @@ class HomeView extends StatelessWidget {
           ),
           child: Column(
               children: List.generate(
-                HomeService.to.jobModelList.length,
+                HomeService.to.selectJobModelList.length,
                     (index) => Column(
                   children: [
                     GestureDetector(
@@ -51,12 +118,12 @@ class HomeView extends StatelessWidget {
                                 height: 54,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(500),
-                                    image: HomeService.to.jobModelList[index].photo == ''?
+                                    image: HomeService.to.selectJobModelList[index].photo == ''?
                                     const DecorationImage(
                                         image: AssetImage('assets/images/img_empty_job.png'),
                                         fit: BoxFit.fill):
                                     DecorationImage(
-                                        image: NetworkImage(HomeService.to.jobModelList[index].photo ?? ''),
+                                        image: NetworkImage(HomeService.to.selectJobModelList[index].photo ?? ''),
                                         fit: BoxFit.fill)
                                 ),
                               ),
@@ -66,10 +133,10 @@ class HomeView extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: [
-                                        Expanded(child: Text(HomeService.to.jobModelList[index].title ?? '', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, height: 1, color: AppColors.black))),
+                                        Expanded(child: Text(HomeService.to.selectJobModelList[index].title ?? '', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, height: 1, color: AppColors.black))),
                                         Builder(
                                           builder: (context) {
-                                            List<String> skillList = (HomeService.to.jobModelList[index].skill ?? '').split(',');
+                                            List<String> skillList = (HomeService.to.selectJobModelList[index].skill ?? '').split(',');
                                             for(int i=0;i<skillList.length;i++){
                                               skillList[i] = skillList[i].replaceAll(' ', '');
                                             }
@@ -92,7 +159,7 @@ class HomeView extends StatelessWidget {
                                     const SizedBox(height: 14),
                                     Row(
                                       children: [
-                                        Expanded(child: Text(HomeService.to.jobModelList[index].companyName ?? '', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                                        Expanded(child: Text(HomeService.to.selectJobModelList[index].companyName ?? '', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
                                         const Text('1 days ago', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, height: 1, color: AppColors.grey1))
                                       ],
                                     )
@@ -140,5 +207,27 @@ class HomeView extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void selectedDropDownChanged(String value, RxString selectedItem){
+    selectedItem.value = value;
+
+    HomeService.to.selectJobModelList.value = [];
+    if(selectedCategoryItem.value == 'Please Select' && selectedLocationItem.value == 'Please Select' &&
+        selectedSalaryItem.value == 'Please Select' && selectedSkillItem.value == 'Please Select'){
+      for(int i=0;i<HomeService.to.jobModelList.length;i++){
+        HomeService.to.selectJobModelList.add(HomeService.to.jobModelList[i]);
+      }
+    } else{
+      for(int i=0; i<HomeService.to.jobModelList.length; i++){
+        if((selectedCategoryItem.value == 'Please Select' || selectedCategoryItem.value == HomeService.to.jobModelList[i].category)
+          && (selectedLocationItem.value == 'Please Select' || selectedLocationItem.value == HomeService.to.jobModelList[i].location)
+          && (selectedSalaryItem.value == 'Please Select' || selectedSalaryItem.value == HomeService.to.jobModelList[i].salaryRange)
+          && (selectedSkillItem.value == 'Please Select' || selectedSkillItem.value == HomeService.to.jobModelList[i].skill)){
+          HomeService.to.selectJobModelList.add(HomeService.to.jobModelList[i]);
+        }
+      }
+    }
+
   }
 }

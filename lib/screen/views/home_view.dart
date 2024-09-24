@@ -2,6 +2,7 @@ import 'package:crypto_ui_web/constant/color.dart';
 import 'package:crypto_ui_web/screen/views/profile_list_view.dart';
 import 'package:crypto_ui_web/screen/widget/remote_style.dart';
 import 'package:crypto_ui_web/services/home_service.dart';
+import 'package:crypto_ui_web/share/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -160,7 +161,7 @@ class HomeView extends StatelessWidget {
                                     Row(
                                       children: [
                                         Expanded(child: Text(HomeService.to.selectJobModelList[index].companyName ?? '', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
-                                        const Text('1 days ago', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, height: 1, color: AppColors.grey1))
+                                        Text('${RemoteUtils.dateDifference(HomeService.to.selectJobModelList[index].createdAt)} days ago', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, height: 1, color: AppColors.grey1))
                                       ],
                                     )
                                   ],

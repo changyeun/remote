@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as service;
 import 'package:styled_text/styled_text.dart';
 
-class AngleroText extends StatelessWidget {
-  AngleroText(this.text,
+class RemoteText extends StatelessWidget {
+  RemoteText(this.text,
       {Key? key,
         this.style = const TextStyle(color: Colors.black),
         this.emStyle = const TextStyle(
@@ -60,6 +60,14 @@ class AngleroText extends StatelessWidget {
         overflow: textOverflow,
       );
     }
+  }
+}
+
+
+class RemoteUtils{
+  static int dateDifference(DateTime selectedDate){
+    Duration diff = DateTime.now().difference(selectedDate);
+    return diff.inDays + 1;
   }
 }
 

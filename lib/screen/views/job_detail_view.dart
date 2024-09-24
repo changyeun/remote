@@ -1,5 +1,6 @@
 import 'package:crypto_ui_web/constant/color.dart';
 import 'package:crypto_ui_web/services/home_service.dart';
+import 'package:crypto_ui_web/share/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,9 +45,9 @@ class _JobDetailViewState extends State<JobDetailView> {
           Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].title ?? '',
             style: const TextStyle(fontSize: 36, fontWeight: FontWeight.w600, color: AppColors.black),),
           const SizedBox(height: 4),
-          Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].companyName ?? '', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: AppColors.black),),
+          Text(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].companyName ?? '', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: AppColors.black),),
           const SizedBox(height: 24),
-          Text('${HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].location ?? ''} ·  4 days ago', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.grey1),),
+          Text('${HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].location ?? ''} ·  ${RemoteUtils.dateDifference(HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].createdAt)} days ago', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.grey1),),
           const SizedBox(height: 100),
 
 

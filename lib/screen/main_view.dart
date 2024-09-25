@@ -136,7 +136,7 @@ class MainView extends StatelessWidget {
               child: Column(
             children: [
               HomeService.to.type.value == 1
-                  ? ProfileEmailView()
+                  ? ProfileEditView()
                   : HomeService.to.type.value == 2
                       ? ProfileListView()
                       : HomeService.to.type.value == 3

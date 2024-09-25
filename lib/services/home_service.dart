@@ -18,6 +18,7 @@ class HomeService extends GetxService {
   RxList<UserModel> selectUserModelList =  RxList([]);
   RxList<JobModel> jobModelList = RxList([]);
   RxList<JobModel> selectJobModelList = RxList([]);
+  RxList<JobModel> selectRecommendJobModelList = RxList([]);
   TextEditingController textEditingEmailController = TextEditingController();
 
   List<String> categoryList = ['Design','Full-Stack Programming', 'Front-End Programming', 'Back-End Programming',
@@ -63,6 +64,7 @@ class HomeService extends GetxService {
   }
 
   Future<void> getUserModel() async{
+    selectUserModelList.value = [];
     userModelList.value = await userRepository.getUserModel();
     for(int i=0;i<userModelList.length;i++){
       selectUserModelList.add(userModelList[i]);
@@ -70,9 +72,22 @@ class HomeService extends GetxService {
   }
 
   Future<void> getJobModel() async{
+    selectJobModelList.value = [];
     jobModelList.value = await jobsRepository.getJobsModel();
     for(int i=0;i<jobModelList.length;i++){
       selectJobModelList.add(jobModelList[i]);
+    }
+  }
+
+  Future<void> recommendJobList(String id, String skill) async{
+    selectRecommendJobModelList.value = [];
+    for(int i=0;i<jobModelList.length;i++){
+      if(jobModelList[i].id == id){
+        selectJobIndex.value = i;
+      }
+      if(jobModelList[i].skill == skill && skill != ''){
+        selectRecommendJobModelList.add(jobModelList[i]);
+      }
     }
   }
 }

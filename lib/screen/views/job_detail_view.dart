@@ -4,6 +4,7 @@ import 'package:crypto_ui_web/share/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:html' as html;
 
 class JobDetailView extends StatefulWidget {
   const JobDetailView({super.key});
@@ -291,7 +292,7 @@ class _JobDetailViewState extends State<JobDetailView> {
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
                     onTap: () async{
-
+                      html.window.location.href = HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].website ?? '';
                     },
                     child: Container(
                       // padding: const EdgeInsets.symmetric(horizontal: 100),
@@ -353,6 +354,101 @@ class _JobDetailViewState extends State<JobDetailView> {
           ),
           const SizedBox(height: 93),
           const SizedBox(height: 120),
+
+
+          if(HomeService.to.selectRecommendJobModelList.isNotEmpty)...[
+            const Text('Related jobs', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600, color: AppColors.black),),
+            const SizedBox(height: 40),
+            Column(
+                children: List.generate(
+                  HomeService.to.selectRecommendJobModelList.length > 3 ? 3:HomeService.to.selectRecommendJobModelList.length,
+                      (index) => Column(
+                    children: [
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: () async{
+                            HomeService.to.type.value = 0;
+                            await 0.1.delay();
+                            HomeService.to.type.value = 4;
+                            // HomeService.to.selectJobIndex.value = index;
+                            HomeService.to.recommendJobList(HomeService.to.selectRecommendJobModelList[index].id ?? '', HomeService.to.selectRecommendJobModelList[index].skill ?? '');
+                          },
+                          child: Container(
+                              width: Get.width,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(14),
+                                border: Border.all(color: AppColors.grey2, width: 1),
+                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+                              // margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 54,
+                                    height: 54,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(500),
+                                        image: HomeService.to.selectJobModelList[index].photo == ''?
+                                        const DecorationImage(
+                                            image: AssetImage('assets/images/img_empty_job.png'),
+                                            fit: BoxFit.fill):
+                                        DecorationImage(
+                                            image: NetworkImage(HomeService.to.selectJobModelList[index].photo ?? ''),
+                                            fit: BoxFit.fill)
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(child: Text(HomeService.to.selectJobModelList[index].title ?? '', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, height: 1, color: AppColors.black))),
+                                            Builder(
+                                                builder: (context) {
+                                                  List<String> skillList = (HomeService.to.selectJobModelList[index].skill ?? '').split(',');
+                                                  for(int i=0;i<skillList.length;i++){
+                                                    skillList[i] = skillList[i].replaceAll(' ', '');
+                                                  }
+                                                  return Wrap(
+                                                    children: List.generate(skillList.length ?? 0,
+                                                            (index) => Container(
+                                                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
+                                                          margin: const EdgeInsets.only(left: 10),
+                                                          decoration: BoxDecoration(
+                                                            color: AppColors.mint_light,
+                                                            borderRadius: BorderRadius.circular(4),
+                                                          ),
+                                                          child: Text(skillList[index], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.mint)),
+                                                        )),
+                                                  );
+                                                }
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 14),
+                                        Row(
+                                          children: [
+                                            Expanded(child: Text(HomeService.to.selectJobModelList[index].companyName ?? '', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                                            Text('${RemoteUtils.dateDifference(HomeService.to.selectJobModelList[index].createdAt)} days ago', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, height: 1, color: AppColors.grey1))
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              )),
+                        ),
+                      ),
+                      const SizedBox(height: 16)
+                    ],
+                  ),
+                )),
+            const SizedBox(height: 120),
+          ],
+
 
         ],
       ),

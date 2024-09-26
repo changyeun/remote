@@ -725,7 +725,7 @@ class _JobPostViewState extends State<JobPostView> {
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
                         onTap: (){
-                          // html.window.location.href = HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].website ?? '';
+                          html.window.location.href = 'https://www.linkedin.com/in/%EB%B0%B1%EB%9D%BC-%EC%A0%95-829b5b227';
                         },
                           child: const Text('LinkedIn.', style: TextStyle(decoration: TextDecoration.underline, fontSize: 16, fontWeight: FontWeight.w400, height: 1.2, color: AppColors.black))),
                     ),

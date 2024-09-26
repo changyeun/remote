@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:html' as html;
 
 class JobPostView extends StatefulWidget {
   JobPostView({super.key});
@@ -714,9 +715,24 @@ class _JobPostViewState extends State<JobPostView> {
                 const SizedBox(height: 40),
                 const Text('Hi! I’m the maker of Remote island. Remote island isn’t a big team, some nerds operates on a laptop somewhere in the world.\n'
                     'I built Remote island to help people and companies grow as fast as they can with no boundaries.\n\n'
-                    'Remote work gives people more flexibility in their daily lives. Businesses also benefit from a remote workforce, which reduces costs for real estate and utilities and allows them to hire top talent workers from around the globe. The world of work is shifting toward flexibility, and that’s the most significant change to work since the industrial revolution. This is why I make this platform.\n'
-                    'Need help? Here’s my LinkedIn. DM me and I’ll help you personally and also can offer you some discount.\n'
-                    'Go Remote, Live in Remote Island!', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1.2, color: AppColors.black)),
+                    'Remote work gives people more flexibility in their daily lives. Businesses also benefit from a remote workforce, '
+                    'which reduces costs for real estate and utilities and allows them to hire top talent workers from around the globe. The world of work is shifting toward flexibility, '
+                    'and that’s the most significant change to work since the industrial revolution. This is why I make this platform.\n', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1.2, color: AppColors.black)),
+                Wrap(
+                  children: [
+                    const Text('Need help? Here’s my ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1.2, color: AppColors.black)),
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: (){
+                          // html.window.location.href = HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].website ?? '';
+                        },
+                          child: const Text('LinkedIn.', style: TextStyle(decoration: TextDecoration.underline, fontSize: 16, fontWeight: FontWeight.w400, height: 1.2, color: AppColors.black))),
+                    ),
+                    const Text(' DM me and I’ll help you personally and also can offer you some discount.\n', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1.2, color: AppColors.black)),
+                  ],
+                ),
+                const Text('Go Remote, Live in Remote Island!', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1.2, color: AppColors.black)),
                 const SizedBox(height: 40),
                 const Text('- Baekla Jeong, Founder of Remote island', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1.2, color: AppColors.black)),
               ],

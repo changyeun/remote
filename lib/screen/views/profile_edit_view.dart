@@ -65,15 +65,15 @@ class _ProfileEditViewState extends State<ProfileEditView> {
   Widget build(BuildContext context) {
     if (!widget.isInit) {
       TextEditingController textEditingEmploymentController = TextEditingController();
-      textEditingEmploymentController.text = '202305 - 202406 : venture capitalist @Jesttrack';
+      // textEditingEmploymentController.text = '202305 - 202406 : full stack developer @remote island';
       widget.textEditingEmploymentController.add(textEditingEmploymentController);
 
       TextEditingController textEditingSideProjectController = TextEditingController();
-      textEditingSideProjectController.text = '202305 - 202406 : venture capitalist @Jesttrack';
+      // textEditingSideProjectController.text = '202302 - 202401 : side project title, team name';
       widget.textEditingSideProjectController.add(textEditingSideProjectController);
 
       TextEditingController textEditingEducationsController = TextEditingController();
-      textEditingEducationsController.text = '202305 - 202406 : venture capitalist @Jesttrack';
+      // textEditingEducationsController.text = '201902 - 202003 : MA in Art illustration @ Remote island University';
       widget.textEditingEducationsController.add(textEditingEducationsController);
       widget.isInit = true;
     }
@@ -133,6 +133,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                 Row(
                   children: [
                     const Expanded(child: Text('Username', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    const SizedBox(width: 10),
                     Expanded(child: RemoteStyle.remoteText('Username', widget.textEditingUserNameController)),
                   ],
                 ),
@@ -142,6 +143,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                 Row(
                   children: [
                     const Expanded(child: Text('Account type', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    const SizedBox(width: 10),
                     Expanded(child: RemoteStyle.remoteDropdown(["I'm a remote worker","I'm hiring remote workers"], widget.selectedAccountTypeItem)),
                   ],
                 ),
@@ -163,6 +165,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
+                    const SizedBox(width: 10),
                     Flexible(child:
                     Obx(() => MouseRegion(
                       cursor: SystemMouseCursors.click,
@@ -217,6 +220,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
+                    const SizedBox(width: 10),
                     Expanded(child: RemoteStyle.remoteDropdown(HomeService.to.locationList, widget.selectedLocationItem)),
                   ],
                 ),
@@ -237,6 +241,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
+                    const SizedBox(width: 10),
                     Expanded(child: RemoteStyle.remoteDropdown(HomeService.to.locationList, widget.selectedResidencyCountryItem)),
                   ],
                 ),
@@ -254,6 +259,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
+                    const SizedBox(width: 10),
                     Expanded(child: RemoteStyle.remoteDropdown(HomeService.to.locationList, widget.selectedNationalityItem)),
                   ],
                 ),
@@ -271,6 +277,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
+                    const SizedBox(width: 10),
                     Expanded(child: RemoteStyle.remoteText('Email', widget.textEditingEmailController)),
                   ],
                 ),
@@ -290,6 +297,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
+                    const SizedBox(width: 10),
                     Obx(() => Expanded(child: Container(
                       alignment: Alignment.centerLeft,
                         child: Checkbox(value: widget.checkboxEmailNoti.value, onChanged: (value){widget.checkboxEmailNoti.value = value!;}))))
@@ -310,13 +318,14 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                         //     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
+                    const SizedBox(width: 10),
                     Expanded(child:
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Obx(() => SizedBox(width: 150, child: RadioListTile(title: const Text('Man'), value: 'Man', groupValue: widget.radioGender.value, onChanged: (value){widget.radioGender.value = value!;}))),
-                        Obx(() => SizedBox(width: 150, child: RadioListTile(title: const Text('Woman'), value: 'Woman', groupValue: widget.radioGender.value, onChanged: (value){widget.radioGender.value = value!;})))
+                        Obx(() => SizedBox(width: 200, child: RadioListTile(title: const Text('Woman'), value: 'Woman', groupValue: widget.radioGender.value, onChanged: (value){widget.radioGender.value = value!;})))
                       ],
                     ),),
                   ],
@@ -345,6 +354,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                 Row(
                   children: [
                     const Expanded(child: Text('Website', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    const SizedBox(width: 10),
                     Expanded(child: Row(
                       children: [
                         const Text('https://', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1, color: AppColors.black)),
@@ -369,6 +379,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                         const Expanded(child: Text('GitHub', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
                       ],
                     )),
+                    const SizedBox(width: 10),
                     Expanded(child: RemoteStyle.remoteText('GitHub username', widget.textEditingGithubController)),
                   ],
                 ),
@@ -388,6 +399,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                         const Expanded(child: Text('Twitter', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
                       ],
                     )),
+                    const SizedBox(width: 10),
                     Expanded(child: RemoteStyle.remoteText('Twitter username', widget.textEditingTwitterController)),
                   ],
                 ),
@@ -407,6 +419,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                         const Expanded(child: Text('LinkedIn URL', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
                       ],
                     )),
+                    const SizedBox(width: 10),
                     Expanded(child: RemoteStyle.remoteText('LinkedIn username', widget.textEditingLinkedInController)),
                   ],
                 ),
@@ -426,6 +439,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                         const Expanded(child: Text('Instagram', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
                       ],
                     )),
+                    const SizedBox(width: 10),
                     Expanded(child: RemoteStyle.remoteText('Instagram username', widget.textEditingInstagramController)),
                   ],
                 ),
@@ -452,6 +466,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                 Row(
                   children: [
                     const Expanded(child: Text('Bio', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    const SizedBox(width: 10),
                     Expanded(child: RemoteStyle.remoteText('Write a bio about yourself, what your skills are, your experience previously and what you’re looking for (profiles without a bio are not shown on the frontpage)', widget.textEditingBioController, maxLines: 4)),
                   ],
                 ),
@@ -472,6 +487,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
+                    const SizedBox(width: 10),
                     Expanded(child: RemoteStyle.remoteText('Tags (comma seperated)', widget.textEditingSkillController, maxLines: 4)),
                   ],
                 ),
@@ -481,6 +497,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                 Row(
                   children: [
                     const Expanded(child: Text('Spoken laguages you’re fluent in (comman seperated)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    const SizedBox(width: 10),
                     Expanded(child: Row(
                       children:  [
                         Expanded(child: RemoteStyle.remoteText('Languages (comma seperated)', widget.textEditingLanguagesController)),
@@ -505,7 +522,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                       ],
                     )),
-
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Row(
                         children: [
@@ -582,6 +599,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Expanded(child: Text('Your preferred timezones', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -603,6 +621,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Expanded(child: Text('Your preferred annual pay (min)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -633,6 +652,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Expanded(child: Text('Your preferred hourly pay (min)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -675,7 +695,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
               children: [
                 const Text('Employment', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, height: 1.8, color: AppColors.black)),
                 const SizedBox(height: 30),
-                const Text('202305 - 202406 : venture capitalist @Jesttrack', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.1, color: AppColors.black)),
+                const Text('ex) 202305 - 202406 : full stack developer @remote island', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.1, color: AppColors.black)),
                 const SizedBox(height: 30),
                 const Divider(
                   height: 1,
@@ -742,6 +762,14 @@ class _ProfileEditViewState extends State<ProfileEditView> {
               children: [
                 const Text('Side Projects', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, height: 1.8, color: AppColors.black)),
                 const SizedBox(height: 30),
+                const Text('ex) 202302 - 202401 : side project title, team name', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.1, color: AppColors.black)),
+                const SizedBox(height: 30),
+                const Divider(
+                  height: 1,
+                  thickness: 1,
+                  color: AppColors.grey2,
+                ),
+                const SizedBox(height: 30),
                 const Text('Please write years and months! You can add your (side) projects and portfolio items here.\n'
                     'Leave year end empty if you still work on it (it’ll show as Now). To remove something, make the textboxes empty (for now).',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.1, color: AppColors.black)),
@@ -797,6 +825,14 @@ class _ProfileEditViewState extends State<ProfileEditView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text('Educations', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, height: 1.8, color: AppColors.black)),
+                const SizedBox(height: 30),
+                const Text('ex) 201902 - 202003 : MA in Art illustration @ Remote island University', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.1, color: AppColors.black)),
+                const SizedBox(height: 30),
+                const Divider(
+                  height: 1,
+                  thickness: 1,
+                  color: AppColors.grey2,
+                ),
                 const SizedBox(height: 30),
                 const Text('Please write years and months! Leave year end empty if you still study there (itll show as Now).\nTo remove something, make the textboxes empty (for now).',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.1, color: AppColors.black)),

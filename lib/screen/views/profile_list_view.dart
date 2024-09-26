@@ -155,7 +155,11 @@ class _ProfileListViewState extends State<ProfileListView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('Create your profile now and get matched with thousands of companies hiring remotely', style: TextStyle(fontSize: 36, fontWeight: FontWeight.w400, height: 1.5, color: Colors.white)),
+              Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  child: const Text('Create your profile now and get matched with thousands of companies hiring remotely',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400, height: 1.5, color: Colors.white))),
               const SizedBox(height: 20),
               MouseRegion(
                 cursor: SystemMouseCursors.click,

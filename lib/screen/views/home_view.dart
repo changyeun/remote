@@ -30,7 +30,7 @@ class HomeView extends StatelessWidget {
 
         Container(
           alignment: Alignment.centerLeft,
-          margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 130, vertical: 10),
           child: Wrap(
             children: [
               MouseRegion(
@@ -117,7 +117,7 @@ class HomeView extends StatelessWidget {
                               border: Border.all(color: AppColors.grey2, width: 1),
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
-                            margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+                            margin: const EdgeInsets.symmetric(horizontal: 130, vertical: 8),
                             child: Row(
                               children: [
                                 Container(

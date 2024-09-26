@@ -92,7 +92,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
               await saveProfile();
             },
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 100),
+              padding: const EdgeInsets.symmetric(horizontal: 130),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -122,7 +122,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
               border: Border.all(color: AppColors.grey2, width: 1),
             ),
             padding: const EdgeInsets.all(40),
-            margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 130, vertical: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -343,7 +343,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
               border: Border.all(color: AppColors.grey2, width: 1),
             ),
             padding: const EdgeInsets.all(40),
-            margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 130, vertical: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -455,7 +455,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
               border: Border.all(color: AppColors.grey2, width: 1),
             ),
             padding: const EdgeInsets.all(40),
-            margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 130, vertical: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -631,7 +631,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                               const Text('US \$',
                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                               const SizedBox(width: 10),
-                              SizedBox(width: 100, child: RemoteStyle.remoteText('min', widget.textEditingAnnualPayController)),
+                              SizedBox(width: 130, child: RemoteStyle.remoteText('min', widget.textEditingAnnualPayController)),
                               const SizedBox(width: 10),
                               const Text(',000 / year',
                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
@@ -662,7 +662,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                               const Text('US \$',
                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
                               const SizedBox(width: 10),
-                              SizedBox(width: 100, child: RemoteStyle.remoteText('min', widget.textEditingHourlyPayController)),
+                              SizedBox(width: 130, child: RemoteStyle.remoteText('min', widget.textEditingHourlyPayController)),
                               const SizedBox(width: 10),
                               const Text(',000 / year',
                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
@@ -689,7 +689,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
               border: Border.all(color: AppColors.grey2, width: 1),
             ),
             padding: const EdgeInsets.all(40),
-            margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 130, vertical: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -756,7 +756,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
               border: Border.all(color: AppColors.grey2, width: 1),
             ),
             padding: const EdgeInsets.all(40),
-            margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 130, vertical: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -820,7 +820,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
               border: Border.all(color: AppColors.grey2, width: 1),
             ),
             padding: const EdgeInsets.all(40),
-            margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 130, vertical: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -886,7 +886,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
               await saveProfile();
             },
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 100),
+              padding: const EdgeInsets.symmetric(horizontal: 130),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

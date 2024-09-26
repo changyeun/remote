@@ -17,7 +17,7 @@ class _JobDetailViewState extends State<JobDetailView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 100),
+      margin: const EdgeInsets.symmetric(horizontal: 130),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -295,7 +295,7 @@ class _JobDetailViewState extends State<JobDetailView> {
                       html.window.location.href = HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].website ?? '';
                     },
                     child: Container(
-                      // padding: const EdgeInsets.symmetric(horizontal: 100),
+                      // padding: const EdgeInsets.symmetric(horizontal: 130),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -382,7 +382,7 @@ class _JobDetailViewState extends State<JobDetailView> {
                                 border: Border.all(color: AppColors.grey2, width: 1),
                               ),
                               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
-                              // margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+                              // margin: const EdgeInsets.symmetric(horizontal: 130, vertical: 8),
                               child: Row(
                                 children: [
                                   Container(

@@ -31,7 +31,7 @@ class _ProfileListViewState extends State<ProfileListView> {
         Center(
           child: Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 100),
+            padding: const EdgeInsets.symmetric(horizontal: 130),
             width: Get.width,
             child: Wrap(
               children: List.generate(HomeService.to.skillList.length,
@@ -77,7 +77,7 @@ class _ProfileListViewState extends State<ProfileListView> {
 
         //list
         Obx(() => Container(
-          padding: const EdgeInsets.symmetric(horizontal: 100),
+          padding: const EdgeInsets.symmetric(horizontal: 130),
           child: Wrap(
             children: List.generate(HomeService.to.selectUserModelList.length,
                     (index) =>  Builder(

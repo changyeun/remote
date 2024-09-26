@@ -54,7 +54,7 @@ class _JobPostViewState extends State<JobPostView> {
         ),
         const SizedBox(height: 80),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 100),
+          padding: const EdgeInsets.symmetric(horizontal: 130),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -108,7 +108,7 @@ class _JobPostViewState extends State<JobPostView> {
               border: Border.all(color: AppColors.grey2, width: 1),
             ),
             padding: const EdgeInsets.all(40),
-            margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 130, vertical: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -417,7 +417,7 @@ class _JobPostViewState extends State<JobPostView> {
               border: Border.all(color: AppColors.grey2, width: 1),
             ),
             padding: const EdgeInsets.all(40),
-            margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 130, vertical: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -641,7 +641,7 @@ class _JobPostViewState extends State<JobPostView> {
 
         const SizedBox(height: 80),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 100),
+          padding: const EdgeInsets.symmetric(horizontal: 130),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -698,7 +698,7 @@ class _JobPostViewState extends State<JobPostView> {
                 color: AppColors.mint_light
             ),
             padding: const EdgeInsets.all(40),
-            margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 130, vertical: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

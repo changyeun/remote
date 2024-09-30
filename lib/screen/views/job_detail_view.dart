@@ -292,7 +292,7 @@ class _JobDetailViewState extends State<JobDetailView> {
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
                     onTap: () async{
-                      html.window.location.href = HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].website ?? '';
+                      html.window.location.href = HomeService.to.jobModelList[HomeService.to.selectJobIndex.value].linkOrEmail ?? '';
                     },
                     child: Container(
                       // padding: const EdgeInsets.symmetric(horizontal: 130),

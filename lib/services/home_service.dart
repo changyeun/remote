@@ -28,7 +28,11 @@ class HomeService extends GetxService {
     'Saas', 'Recruiter', 'API', 'Sales', 'Ruby', 'Education', 'DevOps', 'Stats', 'Python', 'Node', 'English', 'NonTech', 'Video',
     'Travel', 'QualityAssurance', 'Ecommerce', 'Teaching', 'Linux', 'Java', 'Crypto', 'Junior', 'Git', 'Legal', 'Android', 'Accounting',
     'Admin', 'Microsoft', 'Excel', 'PHP'];
-  List<String> homeSkillList = [];
+  List<String> homeSkillList = ['Engineer', 'Executive', 'Senior', 'Developer', 'Finance', 'SysAdmin', 'JavaScript', 'Backend', 'Golang',
+    'Cloud', 'Medical', 'FrontEnd', 'FullStack', 'Ops', 'Design', 'React', 'InfoSec', 'Marketing', 'Mobile', 'ContentWriting',
+    'Saas', 'Recruiter', 'API', 'Sales', 'Ruby', 'Education', 'DevOps', 'Stats', 'Python', 'Node', 'English', 'NonTech', 'Video',
+    'Travel', 'QualityAssurance', 'Ecommerce', 'Teaching', 'Linux', 'Java', 'Crypto', 'Junior', 'Git', 'Legal', 'Android', 'Accounting',
+    'Admin', 'Microsoft', 'Excel', 'PHP'];
   List<String> locationList = ['Abkhazia', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia',
     'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herz,egovina', 'Botswana',
     'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Canadart', 'Cape Verde', 'Central African Republic',
@@ -54,8 +58,6 @@ class HomeService extends GetxService {
   void onInit() async{
     // TODO: implement onInit
     super.onInit();
-    homeSkillList = skillList;
-    homeSkillList.removeAt(0);
     await Future.wait([
       getUserModel(),
       getJobModel()

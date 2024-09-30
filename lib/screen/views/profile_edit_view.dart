@@ -271,7 +271,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                     const Expanded(child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Eamil', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black)),
+                        Text('Email', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black)),
                         SizedBox(height: 10),
                         Text('We never dispaly this on the site, but you use this for logging in.\nAnd we forward you messages from employers, as well as you notifications.',
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.3, color: AppColors.black)),
@@ -480,7 +480,7 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                       children: [
                         Text('Skills/stack tags (comma separated)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black)),
                         SizedBox(height: 10),
-                        Text('Use tage like react, js, html, ux, ui, customer support, maketing, frond end,\n'
+                        Text('Use tags like react, js, html, ux, ui, customer support, marketing, frond end,\n'
                             'back end, office365, excel etc. The more/better tags you use the more you\n'
                             'show up one the site! See the Remote Island jobs pages for example tags\n'
                             'in your field to add here.',
@@ -488,19 +488,19 @@ class _ProfileEditViewState extends State<ProfileEditView> {
                       ],
                     )),
                     const SizedBox(width: 10),
-                    Expanded(child: RemoteStyle.remoteText('Tags (comma seperated)', widget.textEditingSkillController, maxLines: 4)),
+                    Expanded(child: RemoteStyle.remoteText('Tags (comma separated)', widget.textEditingSkillController, maxLines: 4)),
                   ],
                 ),
 
-                //Spoken laguages you’re fluent in (comman seperated)
+                //Spoken laguages you’re fluent in (comma separated)
                 const SizedBox(height: 40),
                 Row(
                   children: [
-                    const Expanded(child: Text('Spoken laguages you’re fluent in (comman seperated)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
+                    const Expanded(child: Text('Spoken laguages you’re fluent in (comma separated)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))),
                     const SizedBox(width: 10),
                     Expanded(child: Row(
                       children:  [
-                        Expanded(child: RemoteStyle.remoteText('Languages (comma seperated)', widget.textEditingLanguagesController)),
+                        Expanded(child: RemoteStyle.remoteText('Languages (comma separated)', widget.textEditingLanguagesController)),
                         const SizedBox(width: 10),
                         const Text('(like Spanish, German, Mandarin)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, height: 1, color: AppColors.black))
                       ],

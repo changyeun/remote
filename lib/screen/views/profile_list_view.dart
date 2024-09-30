@@ -88,6 +88,7 @@ class _ProfileListViewState extends State<ProfileListView> {
                         }
                         return Container(
                           width: 284,
+                        height: 520,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(color: AppColors.grey2, width: 1),
@@ -96,7 +97,7 @@ class _ProfileListViewState extends State<ProfileListView> {
                         margin: const EdgeInsets.only(right: 22, bottom: 22),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Center(
                               child: Container(
@@ -104,13 +105,15 @@ class _ProfileListViewState extends State<ProfileListView> {
                                 height: 260,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    image: HomeService.to.selectUserModelList[index].profilePhoto == ''?
+                                    image:
+                                    HomeService.to.selectUserModelList[index].profilePhoto == ''?
                                     const DecorationImage(
                                         image: AssetImage('assets/images/image_empty_profile.png'),
-                                        fit: BoxFit.fill):
+                                        fit: BoxFit.cover)
+                                        :
                                     DecorationImage(
                                         image: NetworkImage(HomeService.to.selectUserModelList[index].profilePhoto ?? ''),
-                                        fit: BoxFit.fill)
+                                        fit: BoxFit.cover)
                                 ),
                               ),
                             ),
@@ -122,10 +125,12 @@ class _ProfileListViewState extends State<ProfileListView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text('${HomeService.to.selectUserModelList[index].userName}\n${HomeService.to.selectUserModelList[index].bio}',
+                                      maxLines: 7,
+                                      overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.4, color: AppColors.grey1)),
                                   const SizedBox(height: 20),
                                   Wrap(
-                                    children: List.generate(skillList.length ?? 0,
+                                    children: List.generate((skillList.length ?? 0) > 1? 1:(skillList.length ?? 0),
                                             (index) => Container(
                                           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
                                           margin: const EdgeInsets.only(right: 10, bottom: 10),

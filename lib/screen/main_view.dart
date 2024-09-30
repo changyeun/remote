@@ -102,7 +102,7 @@ class MainView extends StatelessWidget {
                               border: Border.all(color: AppColors.mint, width: 1),
                             ),
                             child: const Text(
-                              '+ Post a job',
+                              '+ Post a job(FREE)',
                               style: TextStyle(fontSize: 14, color: AppColors.mint, height: 1, fontWeight: FontWeight.w500),
                             ),
                           ),

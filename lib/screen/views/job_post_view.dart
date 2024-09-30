@@ -267,7 +267,7 @@ class _JobPostViewState extends State<JobPostView> {
                     const Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Application Link or Email', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.2, color: AppColors.black)),
+                        Text('Application Link', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.2, color: AppColors.black)),
                         SizedBox(width: 2),
                         Text('*', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.2, color: Color.fromRGBO(246, 84, 40, 1))),
                       ],
@@ -281,12 +281,12 @@ class _JobPostViewState extends State<JobPostView> {
                           height: 16,
                         ),
                         const SizedBox(width: 4),
-                        const Text('Link to Application page or Email address.',
+                        const Text('Link to Application page.',
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.2, color: AppColors.grey1)),
                       ],
                     ),
                     const SizedBox(height: 10),
-                    RemoteStyle.remoteText('Position', widget.textEditingLinkOrEmailController),
+                    RemoteStyle.remoteText('Placeholder', widget.textEditingLinkOrEmailController),
                   ],
                 ),
 
@@ -303,20 +303,20 @@ class _JobPostViewState extends State<JobPostView> {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Image.asset(
-                          'assets/images/info_circle.png',
-                          width: 16,
-                          height: 16,
-                        ),
-                        const SizedBox(width: 4),
-                        const Text('Link to Application page or Email address.',
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.2, color: AppColors.grey1)),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    RemoteStyle.remoteText('Position', widget.textEditingLocationController),
+                    // Row(
+                    //   children: [
+                    //     Image.asset(
+                    //       'assets/images/info_circle.png',
+                    //       width: 16,
+                    //       height: 16,
+                    //     ),
+                    //     const SizedBox(width: 4),
+                    //     const Text('Link to Application page or Email address.',
+                    //         style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.2, color: AppColors.grey1)),
+                    //   ],
+                    // ),
+                    // const SizedBox(height: 10),
+                    RemoteStyle.remoteText('Placeholder', widget.textEditingLocationController),
                   ],
                 ),
 
@@ -333,19 +333,19 @@ class _JobPostViewState extends State<JobPostView> {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Image.asset(
-                          'assets/images/info_circle.png',
-                          width: 16,
-                          height: 16,
-                        ),
-                        const SizedBox(width: 4),
-                        const Text('Link to Application page or Email address.',
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.2, color: AppColors.grey1)),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
+                    // Row(
+                    //   children: [
+                    //     Image.asset(
+                    //       'assets/images/info_circle.png',
+                    //       width: 16,
+                    //       height: 16,
+                    //     ),
+                    //     const SizedBox(width: 4),
+                    //     const Text('Link to Application page or Email address.',
+                    //         style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.2, color: AppColors.grey1)),
+                    //   ],
+                    // ),
+                    // const SizedBox(height: 10),
                     RemoteStyle.remoteMultiText('Placeholder', widget.textEditingAboutRoleController, maxLines: 3),
                   ],
                 ),
